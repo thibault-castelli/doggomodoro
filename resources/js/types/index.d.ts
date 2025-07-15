@@ -35,4 +35,16 @@ export interface User {
     updated_at: string;
 }
 
+export interface UserTimerSettings {
+    id: number;
+    user_id: number;
+    work_duration: number;
+    break_duration: number;
+    long_break_duration: number;
+    long_break_interval: number;
+    auto_play: boolean;
+    created_at: string;
+    updated_at: string;
+}
+
 export type BreadcrumbItemType = BreadcrumbItem;
