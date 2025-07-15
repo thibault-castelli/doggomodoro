@@ -13,6 +13,10 @@
             href: '/settings/profile',
         },
         {
+            title: 'Timer',
+            href: '/settings/timer',
+        },
+        {
             title: 'Password',
             href: '/settings/password',
         },
@@ -35,7 +39,7 @@
     <Heading title="Settings" description="Manage your profile and account settings" />
 
     <div class="flex flex-col space-y-8 md:space-y-0 lg:flex-row lg:space-x-12 lg:space-y-0">
-        <aside class="w-full max-w-xl lg:w-48">
+        <aside class="w-full max-w-xl lg:w-48 mb-0">
             <nav class="flex flex-col space-x-0 space-y-1">
                 {#each sidebarNavItems as item (item.href)}
                     <Link href={item.href}>
@@ -52,7 +56,7 @@
             </nav>
         </aside>
 
-        <Separator class="my-6 md:hidden" />
+        <Separator class="my-6 lg:hidden" />
 
         <div class="flex-1 md:max-w-2xl">
             <section class="max-w-xl space-y-12">

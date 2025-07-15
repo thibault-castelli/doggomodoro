@@ -12,6 +12,10 @@
 
     const breadcrumbItems: BreadcrumbItem[] = [
         {
+            title: 'Settings',
+            href: '/settings',
+        },
+        {
             title: 'Password settings',
             href: '/settings/password',
         },

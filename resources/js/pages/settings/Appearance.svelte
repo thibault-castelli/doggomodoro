@@ -8,6 +8,10 @@
 
     const breadcrumbItems: BreadcrumbItem[] = [
         {
+            title: 'Settings',
+            href: '/settings',
+        },
+        {
             title: 'Appearance settings',
             href: '/settings/appearance',
         },
