@@ -20,4 +20,30 @@ class UserTimerSettings extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get the timer settings for a specific user.
+     *
+     * @param int|null $userId
+     * @return UserTimerSettings
+     */
+    public static function forUser($userId)
+    {
+        if (!$userId)
+            return new self(self::defaultSettings());
+
+        return self::where('user_id', $userId)->firstOrFail();
+    }
+
+    private static function defaultSettings()
+    {
+        return [
+            'work_duration' => 25,
+            'break_duration' => 5,
+            'long_break_duration' => 15,
+            'long_break_interval' => 4,
+            'notifications_enabled' => true,
+            'auto_play' => false,
+        ];
+    }
 }
