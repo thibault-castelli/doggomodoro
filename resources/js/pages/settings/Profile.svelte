@@ -44,11 +44,7 @@
     };
 </script>
 
-<svelte:head>
-    <title>Profile Settings</title>
-</svelte:head>
-
-<AppLayout {breadcrumbs}>
+<AppLayout title="Profile Settings" {breadcrumbs}>
     <SettingsLayout>
         <div class="flex flex-col space-y-6">
             <HeadingSmall title="Profile Information" description="Update your name and email address" />

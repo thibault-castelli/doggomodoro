@@ -54,11 +54,7 @@
     };
 </script>
 
-<svelte:head>
-    <title>Password Settings</title>
-</svelte:head>
-
-<AppLayout breadcrumbs={breadcrumbItems}>
+<AppLayout title="Password Settings" breadcrumbs={breadcrumbItems}>
     <SettingsLayout>
         <div class="space-y-6">
             <HeadingSmall title="Update Password" description="Ensure your account is using a long, random password to stay secure" />

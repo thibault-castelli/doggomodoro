@@ -18,11 +18,7 @@
     ];
 </script>
 
-<svelte:head>
-    <title>Appearance Settings</title>
-</svelte:head>
-
-<AppLayout breadcrumbs={breadcrumbItems}>
+<AppLayout title="Appearance Settings" breadcrumbs={breadcrumbItems}>
     <SettingsLayout>
         <div class="space-y-6">
             <HeadingSmall title="Appearance settings" description="Update your account's appearance settings" />

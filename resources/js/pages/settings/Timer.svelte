@@ -80,11 +80,7 @@
     };
 </script>
 
-<svelte:head>
-    <title>Timer Settings</title>
-</svelte:head>
-
-<AppLayout breadcrumbs={breadcrumbItems}>
+<AppLayout title="Timer Settings" breadcrumbs={breadcrumbItems}>
     <SettingsLayout>
         <div class="space-y-6">
             <HeadingSmall title="Timer Settings" description="Configure your timer settings for optimal productivity." />

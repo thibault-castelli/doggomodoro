@@ -4,12 +4,17 @@
     import type { Snippet } from 'svelte';
 
     interface Props {
+        title?: string;
         breadcrumbs?: BreadcrumbItemType[];
         children?: Snippet;
     }
 
-    let { breadcrumbs = [], children }: Props = $props();
+    let { title = '', breadcrumbs = [], children }: Props = $props();
 </script>
+
+<svelte:head>
+    <title>{title ? title + ' | Doggomodoro' : 'Doggomodoro'}</title>
+</svelte:head>
 
 <AppLayout {breadcrumbs}>
     {@render children?.()}
