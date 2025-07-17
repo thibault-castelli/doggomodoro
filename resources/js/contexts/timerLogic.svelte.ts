@@ -39,6 +39,8 @@ export class Timer {
 	readonly roundType: 'work' | 'break' = $derived(this.currentRoundIndex % 2 === 0 ? 'work' : 'break');
 
 	startTimer = () => {
+		this.currentTime--;
+		
 		this.interval = setInterval(() => {
 			this.currentTime -= 1;
 			if (this.currentTime <= 0) this.goToNextRound();
