@@ -35,9 +35,10 @@ export interface User {
     updated_at: string;
 }
 
-export interface UserTimerSettings {
+export interface UserTimerPresets {
     id: number;
     user_id: number;
+    name: string;
     work_duration: number;
     break_duration: number;
     long_break_duration: number;

@@ -3,9 +3,8 @@
     import Rotate from '@lucide/svelte/icons/rotate-ccw';
     import * as Tooltip from '../ui/tooltip';
     import { buttonVariants } from '../ui/button';
-    import { getTimerContext } from '@/contexts/timerContext.svelte';
 
-    const timer = getTimerContext();
+    let { timer } = $props();
 </script>
 
 <Tooltip.Provider>

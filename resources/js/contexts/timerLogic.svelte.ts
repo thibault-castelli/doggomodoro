@@ -1,10 +1,10 @@
-import { UserTimerSettings } from "@/types";
+import { UserTimerPresets } from "@/types";
 import { secondsToTime } from "../lib/timeConverterUtils";
 
 const ONE_SECOND = 1000;
 const MINUTES_TO_SECONDS = 60;
 
-function createRoundsFromUserTimerSettings(settings: UserTimerSettings): number[] {
+function createRoundsFromUserTimerSettings(settings: UserTimerPresets): number[] {
 	const {work_duration, break_duration, long_break_duration, long_break_interval} = settings;
 	const rounds = [];
 
@@ -20,7 +20,7 @@ function createRoundsFromUserTimerSettings(settings: UserTimerSettings): number[
 }
 
 export class Timer {
-	constructor(settings: UserTimerSettings) {
+	constructor(settings: UserTimerPresets) {
 		this.rounds = createRoundsFromUserTimerSettings(settings);
 		this.currentTime = this.rounds.length > 0 ? this.rounds[0] * MINUTES_TO_SECONDS : 0;
 		this.autoPlay = settings.auto_play || false;

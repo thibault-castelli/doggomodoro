@@ -2,17 +2,17 @@
     import PlayPauseButton from '@/components/timer/PlayPauseButton.svelte';
     import StopReloadButton from '@/components/timer/StopReloadButton.svelte';
     import TimerDisplay from '@/components/timer/TimerDisplay.svelte';
-    import { setTimerContext } from '@/contexts/timerContext.svelte';
     import AppLayout from '@/layouts/AppLayout.svelte';
     import { Timer } from '@/contexts/timerLogic.svelte';
-    import type { UserTimerSettings, BreadcrumbItem } from '@/types';
+    import type { UserTimerPresets, BreadcrumbItem } from '@/types';
     import { onDestroy } from 'svelte';
+    import TimerPresetSelect from '@/components/timer/TimerPresetSelect.svelte';
 
     interface Props {
-        timerSettings: UserTimerSettings;
+        timerPresets: UserTimerPresets[];
     }
 
-    let { timerSettings }: Props = $props();
+    let { timerPresets }: Props = $props();
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
@@ -21,8 +21,10 @@
         },
     ];
 
-    const timer = new Timer(timerSettings);
-    setTimerContext(timer);
+    let selectedPresetId = $state(timerPresets[0].id.toString());
+    let currentPreset = $derived(timerPresets.find((preset) => preset.id.toString() === selectedPresetId) || timerPresets[0]);
+
+    const timer = $derived(new Timer(currentPreset));
 
     onDestroy(() => {
         timer.pauseTimer();
@@ -30,9 +32,11 @@
 </script>
 
 <AppLayout title="Timer" {breadcrumbs}>
-    <TimerDisplay />
+    <TimerDisplay {timer} />
     <div class="flex items-center justify-center gap-4">
-        <PlayPauseButton />
-        <StopReloadButton />
+        <PlayPauseButton {timer} />
+        <StopReloadButton {timer} />
     </div>
+
+    <TimerPresetSelect bind:value={selectedPresetId} {timerPresets} />
 </AppLayout>

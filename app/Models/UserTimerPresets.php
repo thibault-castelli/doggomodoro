@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserTimerSettings extends Model
+class UserTimerPresets extends Model
 {
     protected $fillable = [
         'user_id',
+        'name',
         'work_duration',
         'break_duration',
         'long_break_duration',
@@ -25,19 +26,20 @@ class UserTimerSettings extends Model
      * Get the timer settings for a specific user.
      *
      * @param int|null $userId
-     * @return UserTimerSettings
+     * @return \Illuminate\Support\Collection<int, UserTimerPresets>
      */
     public static function forUser($userId)
     {
         if (!$userId)
-            return new self(self::defaultSettings());
+            return collect([new self(self::defaultPreset())]);
 
-        return self::where('user_id', $userId)->firstOrFail();
+        return self::where('user_id', $userId)->get();
     }
 
-    private static function defaultSettings()
+    private static function defaultPreset()
     {
         return [
+            'name' => 'Default Timer Preset',
             'work_duration' => 25,
             'break_duration' => 5,
             'long_break_duration' => 15,

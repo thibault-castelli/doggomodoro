@@ -3,9 +3,8 @@
     import Pause from '@lucide/svelte/icons/pause';
     import * as Tooltip from '../ui/tooltip';
     import { buttonVariants } from '../ui/button';
-    import { getTimerContext } from '@/contexts/timerContext.svelte';
 
-    const timer = getTimerContext();
+    let { timer } = $props();
 </script>
 
 <Tooltip.Provider>

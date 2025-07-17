@@ -10,9 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('user_timer_settings', function (Blueprint $table) {
+        Schema::create('user_timer_presets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('name')->default('Default Timer Preset');
             $table->integer('work_duration')->default(25);
             $table->integer('break_duration')->default(5);
             $table->integer('long_break_duration')->default(15);
@@ -28,6 +29,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_settings');
+        Schema::dropIfExists('user_timer_presets');
     }
 };

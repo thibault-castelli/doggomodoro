@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { UserTimerSettings, BreadcrumbItem } from '@/types';
+    import type { UserTimerPresets, BreadcrumbItem } from '@/types';
     import AppLayout from '@/layouts/AppLayout.svelte';
     import SettingsLayout from '@/layouts/settings/Layout.svelte';
     import HeadingSmall from '@/components/HeadingSmall.svelte';
@@ -14,10 +14,10 @@
     import { mapZodErrosToFormErrors } from '@/lib/formValidationUtils';
 
     interface Props {
-        timerSettings: UserTimerSettings;
+        timerPresets: UserTimerPresets;
     }
 
-    let { timerSettings }: Props = $props();
+    let { timerPresets }: Props = $props();
 
     let canSubmitForm = $state(true);
 
@@ -41,11 +41,11 @@
     });
 
     const form = useForm({
-        work_duration: timerSettings.work_duration,
-        break_duration: timerSettings.break_duration,
-        long_break_duration: timerSettings.long_break_duration,
-        long_break_interval: timerSettings.long_break_interval,
-        auto_play: timerSettings.auto_play,
+        work_duration: timerPresets.work_duration,
+        break_duration: timerPresets.break_duration,
+        long_break_duration: timerPresets.long_break_duration,
+        long_break_interval: timerPresets.long_break_interval,
+        auto_play: timerPresets.auto_play,
     });
 
     const validateForm = () => {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserTimerSettings;
+use App\Models\UserTimerPresets;
 use Illuminate\Support\Facades\Auth;
 
 class TimerController extends Controller
@@ -12,10 +12,10 @@ class TimerController extends Controller
      */
     public function index()
     {
-        $user_timer_settings = UserTimerSettings::forUser(Auth::id());
+        $userTimerPresets = UserTimerPresets::forUser(Auth::id());
 
         return inertia('Timer', [
-            'timerSettings' => $user_timer_settings,
+            'timerPresets' => $userTimerPresets,
         ]);
     }
 }

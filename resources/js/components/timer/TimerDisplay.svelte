@@ -1,8 +1,7 @@
 <script lang="ts">
-    import { getTimerContext } from '@/contexts/timerContext.svelte';
     import Progress from '../ui/progress/progress.svelte';
 
-    const timer = getTimerContext();
+    let { timer } = $props();
 </script>
 
 <div class="flex flex-col items-center justify-center gap-4 p-6">
