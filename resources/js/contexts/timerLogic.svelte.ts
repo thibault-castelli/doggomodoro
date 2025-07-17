@@ -34,8 +34,9 @@ export class Timer {
 
 	readonly isTimerOn: boolean = $derived(this.interval !== undefined);
 	readonly currentTimeDisplay: string = $derived(secondsToTime(this.currentTime));
+	readonly progressValue: number = $derived(this.currentTime / (this.rounds[this.currentRoundIndex] * MINUTES_TO_SECONDS) * 100);
 	readonly roundDisplay: string = $derived(`${this.currentRoundIndex + 1} / ${this.rounds.length}`);
-	readonly roundType: string = $derived(this.currentRoundIndex % 2 === 0 ? 'work' : 'break');
+	readonly roundType: 'work' | 'break' = $derived(this.currentRoundIndex % 2 === 0 ? 'work' : 'break');
 
 	startTimer = () => {
 		this.interval = setInterval(() => {

@@ -11,17 +11,17 @@
 <Tooltip.Provider>
     <Tooltip.Root>
         {#if !timer.isTimerOn}
-            <Tooltip.Trigger onclick={timer.startTimer} class={buttonVariants({ variant: 'outline' })}>
-                <Play />
+            <Tooltip.Trigger onclick={timer.startTimer} class={`${buttonVariants({ variant: 'default', size: 'lg' })} size-24 py-8`}>
+                <Play class="size-8" />
             </Tooltip.Trigger>
-            <Tooltip.Content>
+            <Tooltip.Content side="bottom">
                 <p>Play</p>
             </Tooltip.Content>
         {:else}
-            <Tooltip.Trigger onclick={timer.pauseTimer} class={buttonVariants({ variant: 'outline' })}>
-                <Pause />
+            <Tooltip.Trigger onclick={timer.pauseTimer} class={`${buttonVariants({ variant: 'default', size: 'lg' })} size-24 py-8`}>
+                <Pause class="size-8" />
             </Tooltip.Trigger>
-            <Tooltip.Content>
+            <Tooltip.Content side="bottom">
                 <p>Pause</p>
             </Tooltip.Content>
         {/if}

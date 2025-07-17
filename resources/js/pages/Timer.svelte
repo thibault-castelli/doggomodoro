@@ -31,6 +31,8 @@
 
 <AppLayout title="Timer" {breadcrumbs}>
     <TimerDisplay />
-    <PlayPauseButton />
-    <StopReloadButton />
+    <div class="flex items-center justify-center gap-4">
+        <PlayPauseButton />
+        <StopReloadButton />
+    </div>
 </AppLayout>

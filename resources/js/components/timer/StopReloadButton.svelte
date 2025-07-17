@@ -11,17 +11,17 @@
 <Tooltip.Provider>
     <Tooltip.Root>
         {#if timer.isTimerOn}
-            <Tooltip.Trigger onclick={timer.stopTimer} class={buttonVariants({ variant: 'outline' })}>
-                <Square />
+            <Tooltip.Trigger onclick={timer.stopTimer} class={`${buttonVariants({ variant: 'default', size: 'lg' })} size-24 py-8`}>
+                <Square class="size-8" />
             </Tooltip.Trigger>
-            <Tooltip.Content>
+            <Tooltip.Content side="bottom">
                 <p>Stop</p>
             </Tooltip.Content>
         {:else}
-            <Tooltip.Trigger onclick={timer.resetSession} class={buttonVariants({ variant: 'outline' })}>
-                <Rotate />
+            <Tooltip.Trigger onclick={timer.resetSession} class={`${buttonVariants({ variant: 'default', size: 'lg' })} size-24 py-8`}>
+                <Rotate class="size-8" />
             </Tooltip.Trigger>
-            <Tooltip.Content>
+            <Tooltip.Content side="bottom">
                 <p>Reload</p>
             </Tooltip.Content>
         {/if}
