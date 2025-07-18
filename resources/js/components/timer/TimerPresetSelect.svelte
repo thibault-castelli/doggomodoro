@@ -12,7 +12,7 @@
 <Select.Root type="single" bind:value>
     <Select.Trigger>{currentPresetName}</Select.Trigger>
     <Select.Content>
-        {#each props.timerPresets as preset}
+        {#each props.timerPresets as preset (preset.id)}
             <Select.Item value={preset.id.toString()}>{preset.name}</Select.Item>
         {/each}
     </Select.Content>

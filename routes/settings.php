@@ -18,9 +18,4 @@ Route::middleware('auth')->group(function () {
     Route::get('settings/appearance', function () {
         return Inertia::render('settings/Appearance');
     })->name('appearance');
-
-    Route::get('settings/timer', [\App\Http\Controllers\Settings\UserTimerPresetsController::class, 'edit'])
-        ->name('timer.edit');
-    Route::put('settings/timer', [\App\Http\Controllers\Settings\UserTimerPresetsController::class, 'update'])
-        ->name('timer.update');
 });

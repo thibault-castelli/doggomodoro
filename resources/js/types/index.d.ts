@@ -17,12 +17,18 @@ export interface NavItem {
     isActive?: boolean;
 }
 
+export interface Flash {
+    success?: string;
+    error?: string;
+}
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
     [key: string]: unknown;
     ziggy: Config & { location: string };
+    flash: Flash;
 };
 
 export interface User {

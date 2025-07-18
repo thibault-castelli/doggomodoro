@@ -13,10 +13,6 @@
             href: '/settings/profile',
         },
         {
-            title: 'Timer',
-            href: '/settings/timer',
-        },
-        {
             title: 'Password',
             href: '/settings/password',
         },

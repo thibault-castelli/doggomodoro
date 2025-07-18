@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { Toaster } from '@/components/ui/sonner';
     import AppLayout from '@/layouts/app/AppSidebarLayout.svelte';
     import type { BreadcrumbItemType } from '@/types';
     import type { Snippet } from 'svelte';
@@ -17,5 +18,6 @@
 </svelte:head>
 
 <AppLayout {breadcrumbs}>
+    <Toaster richColors closeButton position="bottom-right" />
     {@render children?.()}
 </AppLayout>
