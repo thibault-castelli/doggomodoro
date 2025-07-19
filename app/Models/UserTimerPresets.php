@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use InvalidArgumentException;
 
 class UserTimerPresets extends Model
 {
@@ -23,20 +25,40 @@ class UserTimerPresets extends Model
     }
 
     /**
-     * Get the timer settings for a specific user.
+     * Get all timer presets for a specific user.
      *
      * @param int|null $userId
-     * @return \Illuminate\Support\Collection<int, UserTimerPresets>
+     * @return Collection<int, UserTimerPresets>
      */
-    public static function forUser($userId)
+    public static function forUser($userId): Collection
     {
         if (!$userId)
             return collect([new self(self::defaultPreset())]);
 
+        if (!is_numeric($userId) || $userId <= 0)
+            throw new InvalidArgumentException('Invalid user ID.');
+
         return self::where('user_id', $userId)->get();
     }
 
-    private static function defaultPreset()
+    /**
+     * Get one timer preset for a specific user.
+     * @param mixed $userId
+     * @param mixed $presetId
+     * @return ?UserTimerPresets
+     */
+    public static function forUserSingle($userId, $presetId): ?UserTimerPresets
+    {
+        if (!$userId)
+            return new self(self::defaultPreset());
+
+        if (!is_numeric($userId) || $userId <= 0 || !is_numeric($presetId) || $presetId <= 0)
+            throw new InvalidArgumentException('Invalid user ID.');
+
+        return self::where(['user_id' => $userId, 'id' => $presetId])->firstOrFail();
+    }
+
+    public static function defaultPreset()
     {
         return [
             'name' => 'Default Timer Preset',

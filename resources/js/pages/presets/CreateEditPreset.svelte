@@ -2,7 +2,7 @@
     import type { UserTimerPresets, BreadcrumbItem } from '@/types';
     import AppLayout from '@/layouts/AppLayout.svelte';
     import HeadingSmall from '@/components/HeadingSmall.svelte';
-    import { useForm, page } from '@inertiajs/svelte';
+    import { useForm } from '@inertiajs/svelte';
     import Label from '@/components/ui/label/label.svelte';
     import Input from '@/components/ui/input/input.svelte';
     import InputError from '@/components/InputError.svelte';
@@ -10,26 +10,13 @@
     import Button from '@/components/ui/button/button.svelte';
     import { z } from 'zod';
     import { mapZodErrosToFormErrors } from '@/lib/formValidationUtils';
-    import TimerPresetSelect from '@/components/timer/TimerPresetSelect.svelte';
-    import { toast } from 'svelte-sonner';
 
     interface Props {
-        timerPresets: UserTimerPresets[];
+        isCreateMode: boolean;
+        timerPreset: UserTimerPresets;
     }
 
-    let success = $derived($page.props.flash.success);
-    let error = $derived($page.props.flash.error);
-    $effect(() => {
-        if (success) {
-            toast.success(success);
-            success = '';
-        } else if (error) {
-            toast.error(error, { duration: 5000 });
-            error = '';
-        }
-    });
-
-    let { timerPresets }: Props = $props();
+    let { isCreateMode, timerPreset }: Props = $props();
 
     let canSubmitForm = $state(true);
 
@@ -38,12 +25,14 @@
             title: 'Presets',
             href: '/presets',
         },
+        {
+            title: isCreateMode ? `Create Timer Preset` : `Edit '${timerPreset.name}' Preset`,
+            href: isCreateMode ? '/presets/create' : '/presets/' + timerPreset.id,
+        },
     ];
 
-    let selectedPresetId = $state(timerPresets[0].id.toString());
-    let selectedPreset = $derived(timerPresets.find((preset) => preset.id.toString() === selectedPresetId) || timerPresets[0]);
-
     const timerSettingsSchema = z.object({
+        name: z.string().max(255),
         work_duration: z.number().int('blabla').min(1).max(60),
         break_duration: z.number().int().min(1).max(60),
         long_break_duration: z.number().int().min(1).max(60),
@@ -51,16 +40,14 @@
         auto_play: z.boolean(),
     });
 
-    const form = $derived(
-        useForm({
-            name: selectedPreset.name,
-            work_duration: selectedPreset.work_duration,
-            break_duration: selectedPreset.break_duration,
-            long_break_duration: selectedPreset.long_break_duration,
-            long_break_interval: selectedPreset.long_break_interval,
-            auto_play: selectedPreset.auto_play,
-        }),
-    );
+    const form = useForm({
+        name: timerPreset.name,
+        work_duration: timerPreset.work_duration,
+        break_duration: timerPreset.break_duration,
+        long_break_duration: timerPreset.long_break_duration,
+        long_break_interval: timerPreset.long_break_interval,
+        auto_play: timerPreset.auto_play,
+    });
 
     const validateForm = () => {
         const formatedData = {
@@ -89,16 +76,24 @@
 
         if (!validateForm()) return;
 
-        $form.put(route('presets.update', selectedPresetId), {
-            preserveScroll: true,
-        });
+        if (isCreateMode) {
+            $form.post(route('presets.store'), {
+                preserveScroll: true,
+            });
+        } else {
+            $form.put(route('presets.update', timerPreset.id), {
+                preserveScroll: true,
+            });
+        }
     };
 </script>
 
 <AppLayout title="Presets" breadcrumbs={breadcrumbItems}>
-    <TimerPresetSelect bind:value={selectedPresetId} {timerPresets} />
     <div class="space-y-6">
-        <HeadingSmall title="Timer Settings" description="Configure your timer settings for optimal productivity." />
+        <HeadingSmall
+            title={isCreateMode ? 'Create Timer Preset' : 'Edit Timer Preset'}
+            description="Configure your timer preset for optimal productivity."
+        />
         <form onsubmit={submit} class="space-y-6">
             <div class="grid gap-2">
                 <Label for="name">Preset Name</Label>
