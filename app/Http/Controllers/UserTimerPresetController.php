@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserTimerPresetRequest;
 use App\Http\Controllers\Controller;
-use App\Models\UserTimerPresets;
+use App\Models\UserTimerPreset;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class UserTimerPresetsController extends Controller
+class UserTimerPresetController extends Controller
 {
     /**
      * Show user's timer presets page.
@@ -17,7 +17,7 @@ class UserTimerPresetsController extends Controller
     public function show()
     {
         return Inertia::render('presets/Presets', [
-            'timerPresets' => UserTimerPresets::forUser(Auth::id())
+            'timerPresets' => UserTimerPreset::forUser(Auth::id())
         ]);
     }
 
@@ -28,7 +28,7 @@ class UserTimerPresetsController extends Controller
     {
         return Inertia::render('presets/CreateEditPreset', [
             'isCreateMode' => true,
-            'timerPreset' => new UserTimerPresets(UserTimerPresets::defaultPreset()),
+            'timerPreset' => UserTimerPreset::defaultPreset(),
         ]);
     }
 
@@ -41,7 +41,7 @@ class UserTimerPresetsController extends Controller
         $validated['user_id'] = Auth::id();
 
         try {
-            $userTimerPreset = UserTimerPresets::create($validated);
+            $userTimerPreset = UserTimerPreset::create($validated);
 
             return redirect()->route('presets')->with('success', "Timer preset '{$userTimerPreset->name}' created successfully.");
         } catch (Exception $e) {
@@ -54,14 +54,16 @@ class UserTimerPresetsController extends Controller
      */
     public function edit(string $id)
     {
-        $userTimerPreset = UserTimerPresets::forUserSingle(Auth::id(), $id);
-        if (!$userTimerPreset)
-            return back();
+        try {
+            $userTimerPreset = UserTimerPreset::forUserSingle(Auth::id(), $id);
 
-        return Inertia::render('presets/CreateEditPreset', [
-            'isCreateMode' => false,
-            'timerPreset' => $userTimerPreset,
-        ]);
+            return Inertia::render('presets/CreateEditPreset', [
+                'isCreateMode' => false,
+                'timerPreset' => $userTimerPreset,
+            ]);
+        } catch (Exception $e) {
+            abort(404);
+        }
     }
 
     /**
@@ -72,13 +74,10 @@ class UserTimerPresetsController extends Controller
         $validated = $request->validated();
 
         try {
-            $userTimerPresets = UserTimerPresets::forUserSingle(Auth::id(), $id);
-            if (!$userTimerPresets)
-                throw new Exception('Timer preset not found.');
+            $userTimerPreset = UserTimerPreset::forUserSingle(Auth::id(), $id);
+            $userTimerPreset->update($validated);
 
-            $userTimerPresets->update($validated);
-
-            return redirect()->route('presets')->with('success', "Timer preset '{$userTimerPresets->name}' updated successfully.");
+            return redirect()->route('presets')->with('success', "Timer preset '{$userTimerPreset->name}' updated successfully.");
         } catch (Exception $e) {
             return back()->with('error', 'Failed to update timer preset: ' . $e->getMessage());
         }
@@ -87,13 +86,13 @@ class UserTimerPresetsController extends Controller
     public function destroy(string $id)
     {
         try {
-            if (UserTimerPresets::forUserCount(Auth::id()) == 0)
+            if (UserTimerPreset::forUserCount(Auth::id()) <= 1)
                 throw new Exception('You cannot delete the only preset you have.');
 
-            $userTimerPresets = UserTimerPresets::forUserSingle(Auth::id(), $id);
-            $userTimerPresets->delete();
+            $userTimerPreset = UserTimerPreset::forUserSingle(Auth::id(), $id);
+            $userTimerPreset->delete();
 
-            return redirect()->route('presets')->with('success', "Timer preset '{$userTimerPresets->name}' deleted successfully.");
+            return redirect()->route('presets')->with('success', "Timer preset '{$userTimerPreset->name}' deleted successfully.");
         } catch (Exception $e) {
             return back()->with('error', 'Failed to delete timer preset: ' . $e->getMessage());
         }

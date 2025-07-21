@@ -41,7 +41,7 @@ export interface User {
     updated_at: string;
 }
 
-export interface UserTimerPresets {
+export interface UserTimerPreset {
     id: number;
     user_id: number;
     name: string;

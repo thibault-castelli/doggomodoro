@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { UserTimerPresets, BreadcrumbItem } from '@/types';
+    import type { UserTimerPreset, BreadcrumbItem } from '@/types';
     import AppLayout from '@/layouts/AppLayout.svelte';
     import HeadingSmall from '@/components/HeadingSmall.svelte';
     import { useForm } from '@inertiajs/svelte';
@@ -13,7 +13,7 @@
 
     interface Props {
         isCreateMode: boolean;
-        timerPreset: UserTimerPresets;
+        timerPreset: UserTimerPreset;
     }
 
     let { isCreateMode, timerPreset }: Props = $props();

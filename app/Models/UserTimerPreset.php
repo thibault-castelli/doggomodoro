@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
 
-class UserTimerPresets extends Model
+class UserTimerPreset extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'user_id',
         'name',
@@ -28,12 +31,12 @@ class UserTimerPresets extends Model
      * Get all timer presets for a specific user.
      *
      * @param int|null $userId
-     * @return Collection<int, UserTimerPresets>
+     * @return Collection<int, UserTimerPreset>
      */
     public static function forUser($userId): Collection
     {
         if (!$userId)
-            return collect([new self(self::defaultPreset())]);
+            return collect([self::defaultPreset()]);
 
         if (!is_numeric($userId) || $userId <= 0)
             throw new InvalidArgumentException('Invalid user ID.');
@@ -45,12 +48,12 @@ class UserTimerPresets extends Model
      * Get one timer preset for a specific user.
      * @param mixed $userId
      * @param mixed $presetId
-     * @return ?UserTimerPresets
+     * @return ?UserTimerPreset
      */
-    public static function forUserSingle($userId, $presetId): ?UserTimerPresets
+    public static function forUserSingle($userId, $presetId): ?UserTimerPreset
     {
         if (!$userId)
-            return new self(self::defaultPreset());
+            return self::defaultPreset();
 
         if (!is_numeric($userId) || $userId <= 0 || !is_numeric($presetId) || $presetId <= 0)
             throw new InvalidArgumentException('Invalid user ID.');
@@ -63,12 +66,12 @@ class UserTimerPresets extends Model
         if (!$userId)
             return 0;
 
-        return self::where('user_id', operator: $userId)->count();
+        return self::where('user_id', $userId)->count();
     }
 
-    public static function defaultPreset()
+    public static function defaultPreset(): UserTimerPreset
     {
-        return [
+        return new self([
             'name' => 'Default Timer Preset',
             'work_duration' => 25,
             'break_duration' => 5,
@@ -76,6 +79,6 @@ class UserTimerPresets extends Model
             'long_break_interval' => 4,
             'notifications_enabled' => true,
             'auto_play' => false,
-        ];
+        ]);
     }
 }

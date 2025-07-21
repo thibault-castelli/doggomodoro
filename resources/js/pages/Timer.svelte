@@ -4,12 +4,12 @@
     import TimerDisplay from '@/components/timer/TimerDisplay.svelte';
     import AppLayout from '@/layouts/AppLayout.svelte';
     import { Timer } from '@/contexts/timerLogic.svelte';
-    import type { UserTimerPresets, BreadcrumbItem } from '@/types';
+    import type { UserTimerPreset, BreadcrumbItem } from '@/types';
     import { onDestroy } from 'svelte';
     import TimerPresetSelect from '@/components/timer/TimerPresetSelect.svelte';
 
     interface Props {
-        timerPresets: UserTimerPresets[];
+        timerPresets: UserTimerPreset[];
     }
 
     let { timerPresets }: Props = $props();

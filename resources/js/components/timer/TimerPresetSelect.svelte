@@ -1,11 +1,11 @@
 <script lang="ts">
     import * as Select from '@/components/ui/select';
     import Label from '@/components/ui/label/label.svelte';
-    import type { UserTimerPresets } from '@/types';
+    import type { UserTimerPreset } from '@/types';
 
     let { value = $bindable(), ...props } = $props();
 
-    let currentPresetName = $derived(props.timerPresets.find((preset: UserTimerPresets) => preset.id.toString() === value)?.name || 'Select Preset');
+    let currentPresetName = $derived(props.timerPresets.find((preset: UserTimerPreset) => preset.id.toString() === value)?.name || 'Select Preset');
 </script>
 
 <div>

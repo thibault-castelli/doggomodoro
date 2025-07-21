@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\UserTimerPresets;
+use App\Models\UserTimerPreset;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,17 +21,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        UserTimerPresets::create([
+        UserTimerPreset::factory(2)->create([
             'user_id' => $testUser->id,
-        ]);
-        UserTimerPresets::create([
-            'user_id' => $testUser->id,
-            'name' => 'Other Preset',
-            'work_duration' => 30,
-            'break_duration' => 10,
-            'long_break_duration' => 20,
-            'long_break_interval' => 2,
-            'auto_play' => false,
         ]);
     }
 }

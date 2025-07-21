@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { UserTimerPresets, BreadcrumbItem } from '@/types';
+    import type { UserTimerPreset, BreadcrumbItem } from '@/types';
     import AppLayout from '@/layouts/AppLayout.svelte';
     import Label from '@/components/ui/label/label.svelte';
     import Button from '@/components/ui/button/button.svelte';
@@ -9,7 +9,7 @@
     import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.svelte';
 
     interface Props {
-        timerPresets: UserTimerPresets[];
+        timerPresets: UserTimerPreset[];
     }
 
     let { timerPresets }: Props = $props();
