@@ -89,12 +89,12 @@
 </script>
 
 <AppLayout title="Presets" breadcrumbs={breadcrumbItems}>
-    <div class="space-y-6">
+    <div class="space-y-6 px-4 py-6">
         <HeadingSmall
             title={isCreateMode ? 'Create Timer Preset' : 'Edit Timer Preset'}
             description="Configure your timer preset for optimal productivity."
         />
-        <form onsubmit={submit} class="space-y-6">
+        <form onsubmit={submit} class="space-y-4">
             <div class="grid gap-2">
                 <Label for="name">Preset Name</Label>
                 <Input id="name" type="text" class="mt-1 block w-full" bind:value={$form.name} onblur={validateForm} />

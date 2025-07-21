@@ -9,9 +9,9 @@
 </script>
 
 <div>
-    <Label class="mb-4">Select Timer Preset</Label>
+    <Label class="mb-2 text-xl">Select Timer Preset</Label>
     <Select.Root type="single" bind:value>
-        <Select.Trigger>{currentPresetName}</Select.Trigger>
+        <Select.Trigger class="w-full">{currentPresetName}</Select.Trigger>
         <Select.Content>
             {#each props.timerPresets as preset (preset.id)}
                 <Select.Item value={preset.id.toString()}>{preset.name}</Select.Item>

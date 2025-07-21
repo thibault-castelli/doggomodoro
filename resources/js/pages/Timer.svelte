@@ -38,5 +38,7 @@
         <StopReloadButton {timer} />
     </div>
 
-    <TimerPresetSelect bind:value={selectedPresetId} {timerPresets} />
+    <div class="mt-12 w-1/2 m-auto">
+        <TimerPresetSelect bind:value={selectedPresetId} {timerPresets} />
+    </div>
 </AppLayout>

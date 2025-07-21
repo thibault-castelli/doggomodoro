@@ -1,12 +1,12 @@
 <script lang="ts">
     import type { UserTimerPreset, BreadcrumbItem } from '@/types';
     import AppLayout from '@/layouts/AppLayout.svelte';
-    import Label from '@/components/ui/label/label.svelte';
-    import Button from '@/components/ui/button/button.svelte';
     import TimerPresetSelect from '@/components/timer/TimerPresetSelect.svelte';
     import Heading from '@/components/Heading.svelte';
-    import { Link, router } from '@inertiajs/svelte';
+    import { router } from '@inertiajs/svelte';
     import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.svelte';
+    import { Plus, Pen } from 'lucide-svelte';
+    import ButtonWithTooltip from '@/components/ButtonWithTooltip.svelte';
 
     interface Props {
         timerPresets: UserTimerPreset[];
@@ -23,6 +23,10 @@
 
     let selectedPresetId = $state(timerPresets[0].id.toString());
     let selectedPreset = $derived(timerPresets.find((preset) => preset.id.toString() === selectedPresetId) || timerPresets[0]);
+
+    const goToCreatePresetPage = () => {
+        router.get('/presets/create');
+    };
 
     const goToEditPresetPage = () => {
         router.get('/presets/' + selectedPresetId);
@@ -42,46 +46,32 @@
 </script>
 
 <AppLayout title="Presets" breadcrumbs={breadcrumbItems}>
-    <div class="space-y-6 m-3 p-3 relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
+    <div class="px-4 py-6">
         <Heading title="Timer Presets" description="Configure your timer presets for optimal productivity." />
 
-        <div class="flex gap-3">
-            <TimerPresetSelect bind:value={selectedPresetId} {timerPresets} />
-            <Link href={route('presets.create')}><Button>Create New Preset</Button></Link>
-            <Button onclick={goToEditPresetPage}>Edit Preset</Button>
-            {#if timerPresets.length > 1}
-                <ConfirmDeleteDialog triggerText="Delete Preset" title={`Delete '${selectedPreset.name}' Preset?`} action={goToDeletePresetPage} />
-            {/if}
+        <div class="flex flex-col gap-4 mb-4 sm:items-end sm:flex-row">
+            <div class="grow">
+                <TimerPresetSelect bind:value={selectedPresetId} {timerPresets} />
+            </div>
+            <div class="flex justify-around gap-2 grow sm:justify-start">
+                <ButtonWithTooltip action={goToCreatePresetPage} tooltipText="Create Preset"><Plus /></ButtonWithTooltip>
+                <ButtonWithTooltip action={goToEditPresetPage} tooltipText="Edit Selected Preset"><Pen /></ButtonWithTooltip>
+                {#if timerPresets.length > 1}
+                    <ConfirmDeleteDialog title={`Delete '${selectedPreset.name}' Preset?`} action={goToDeletePresetPage} />
+                {/if}
+            </div>
         </div>
 
-        <div class="grid gap-2">
-            <Label for="name">Preset Name</Label>
-            <p>{selectedPreset.name}</p>
-        </div>
+        <p>Preset Name: <span class="font-bold">{selectedPreset.name}</span></p>
 
-        <div class="grid gap-2">
-            <Label for="workDuration">Work Duration (minutes)</Label>
-            <p>{selectedPreset.work_duration}</p>
-        </div>
+        <p>Work Duration (minutes): <span class="font-bold">{selectedPreset.work_duration}</span></p>
 
-        <div class="grid gap-2">
-            <Label for="breakDuration">Break Duration (minutes)</Label>
-            <p>{selectedPreset.break_duration}</p>
-        </div>
+        <p>Break Duration (minutes): <span class="font-bold">{selectedPreset.break_duration}</span></p>
 
-        <div class="grid gap-2">
-            <Label for="longBreakDuration">Long Break Duration (minutes)</Label>
-            <p>{selectedPreset.long_break_duration}</p>
-        </div>
+        <p>Long Break Duration (minutes): <span class="font-bold">{selectedPreset.long_break_duration}</span></p>
 
-        <div class="grid gap-2">
-            <Label for="longBreakInterval">Long Break Interval</Label>
-            <p>{selectedPreset.long_break_interval}</p>
-        </div>
+        <p>Long Break Interval: <span class="font-bold">{selectedPreset.long_break_interval}</span></p>
 
-        <div class="grid gap-2">
-            <Label for="autoPlay">Auto Play</Label>
-            <p>{selectedPreset.auto_play ? 'Yes' : 'No'}</p>
-        </div>
+        <p>Auto Play:<span class="font-bold">{selectedPreset.auto_play ? 'Yes' : 'No'}</span></p>
     </div>
 </AppLayout>
