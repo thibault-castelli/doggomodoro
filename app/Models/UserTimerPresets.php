@@ -58,6 +58,14 @@ class UserTimerPresets extends Model
         return self::where(['user_id' => $userId, 'id' => $presetId])->firstOrFail();
     }
 
+    public static function forUserCount($userId): int
+    {
+        if (!$userId)
+            return 0;
+
+        return self::where('user_id', operator: $userId)->count();
+    }
+
     public static function defaultPreset()
     {
         return [

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserTimerPresetRequest;
 use App\Http\Controllers\Controller;
 use App\Models\UserTimerPresets;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -43,7 +44,7 @@ class UserTimerPresetsController extends Controller
             $userTimerPreset = UserTimerPresets::create($validated);
 
             return redirect()->route('presets')->with('success', "Timer preset '{$userTimerPreset->name}' created successfully.");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('error', 'Failed to create timer preset: ' . $e->getMessage());
         }
     }
@@ -73,12 +74,12 @@ class UserTimerPresetsController extends Controller
         try {
             $userTimerPresets = UserTimerPresets::forUserSingle(Auth::id(), $id);
             if (!$userTimerPresets)
-                throw new \Exception('Timer preset not found.');
+                throw new Exception('Timer preset not found.');
 
             $userTimerPresets->update($validated);
 
             return redirect()->route('presets')->with('success', "Timer preset '{$userTimerPresets->name}' updated successfully.");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('error', 'Failed to update timer preset: ' . $e->getMessage());
         }
     }
@@ -86,11 +87,14 @@ class UserTimerPresetsController extends Controller
     public function destroy(string $id)
     {
         try {
+            if (UserTimerPresets::forUserCount(Auth::id()) == 0)
+                throw new Exception('You cannot delete the only preset you have.');
+
             $userTimerPresets = UserTimerPresets::forUserSingle(Auth::id(), $id);
             $userTimerPresets->delete();
 
             return redirect()->route('presets')->with('success', "Timer preset '{$userTimerPresets->name}' deleted successfully.");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('error', 'Failed to delete timer preset: ' . $e->getMessage());
         }
     }

@@ -29,9 +29,15 @@
     };
 
     const goToDeletePresetPage = () => {
+        if (timerPresets.length <= 1) return;
+
         router.delete('/presets/' + selectedPresetId);
-        // TODO: Select available preset
-        // TODO: Prevent deleting of only one preset left
+        resetSelectedPresetIdAfterDelete();
+    };
+
+    const resetSelectedPresetIdAfterDelete = () => {
+        const selectedPresetIndex = timerPresets.findIndex((preset) => preset.id.toString() === selectedPresetId);
+        selectedPresetIndex === 0 ? (selectedPresetId = timerPresets[1].id.toString()) : (selectedPresetId = timerPresets[0].id.toString());
     };
 </script>
 
@@ -43,7 +49,9 @@
             <TimerPresetSelect bind:value={selectedPresetId} {timerPresets} />
             <Link href={route('presets.create')}><Button>Create New Preset</Button></Link>
             <Button onclick={goToEditPresetPage}>Edit Preset</Button>
-            <ConfirmDeleteDialog triggerText="Delete Preset" title={`Delete '${selectedPreset.name}' Preset?`} action={goToDeletePresetPage} />
+            {#if timerPresets.length > 1}
+                <ConfirmDeleteDialog triggerText="Delete Preset" title={`Delete '${selectedPreset.name}' Preset?`} action={goToDeletePresetPage} />
+            {/if}
         </div>
 
         <div class="grid gap-2">
