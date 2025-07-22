@@ -5,7 +5,7 @@
     import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
     import { type NavItem } from '@/types';
     import { Link } from '@inertiajs/svelte';
-    import { BookOpen, Folder, LayoutGrid, Clock, Settings2 } from 'lucide-svelte';
+    import { Github, LayoutGrid, Clock, Settings2 } from 'lucide-svelte';
     import AppLogo from './AppLogo.svelte';
 
     const mainNavItems: NavItem[] = [
@@ -28,14 +28,9 @@
 
     const footerNavItems: NavItem[] = [
         {
-            title: 'Repository',
-            href: 'https://github.com/oseughu/svelte-starter-kit',
-            icon: Folder,
-        },
-        {
-            title: 'Documentation',
-            href: 'https://laravel.com/docs/starter-kits',
-            icon: BookOpen,
+            title: 'Made by codeintheshell',
+            href: 'https://github.com/thibault-castelli/doggomodoro',
+            icon: Github,
         },
     ];
 </script>
@@ -45,7 +40,7 @@
         <SidebarMenu>
             <SidebarMenuItem>
                 <SidebarMenuButton size="lg">
-                    <Link href={route('dashboard')}>
+                    <Link href={route('timer')}>
                         <AppLogo />
                     </Link>
                 </SidebarMenuButton>

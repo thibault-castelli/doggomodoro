@@ -11,7 +11,6 @@
 </script>
 
 <SidebarGroup class="px-2 py-0">
-    <SidebarGroupLabel>Platform</SidebarGroupLabel>
     <SidebarMenu>
         {#each items as item (item.title)}
             <SidebarMenuItem>

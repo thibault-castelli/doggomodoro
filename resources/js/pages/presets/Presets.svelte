@@ -58,7 +58,11 @@
                 <ButtonWithTooltip action={goToCreatePresetPage} tooltipText="Create Preset"><Plus /></ButtonWithTooltip>
                 <ButtonWithTooltip action={goToEditPresetPage} tooltipText="Edit Selected Preset"><Pen /></ButtonWithTooltip>
                 {#if timerPresets.length > 1}
-                    <ConfirmDeleteDialog title={`Delete '${selectedPreset.name}' Preset?`} action={goToDeletePresetPage} />
+                    <ConfirmDeleteDialog
+                        title={`Delete '${selectedPreset.name}' Preset?`}
+                        action={goToDeletePresetPage}
+                        tooltipText="Delete Selected Preset"
+                    />
                 {/if}
             </div>
         </div>

@@ -2,18 +2,28 @@
     import { Trash } from 'lucide-svelte';
     import Button, { buttonVariants } from './ui/button/button.svelte';
     import * as Dialog from './ui/dialog';
+    import * as Tooltip from './ui/tooltip';
 
     interface Props {
         title: string;
-        description?: string;
         action: () => void;
+        description?: string;
+        tooltipText?: string;
     }
 
-    let { title = 'Delete', description = 'This action cannot be undone.', action }: Props = $props();
+    let { title, action, tooltipText = 'Delete', description = 'This action cannot be undone.' }: Props = $props();
 </script>
 
 <Dialog.Root>
-    <Dialog.Trigger class={buttonVariants({ variant: 'destructive', size: 'lg' })}><Trash /></Dialog.Trigger>
+    <Tooltip.Provider>
+        <Tooltip.Root>
+            <Tooltip.Trigger>
+                <Dialog.Trigger class={buttonVariants({ variant: 'destructive', size: 'lg' })}><Trash /></Dialog.Trigger>
+            </Tooltip.Trigger>
+            <Tooltip.Content side="bottom">{tooltipText}</Tooltip.Content>
+        </Tooltip.Root>
+    </Tooltip.Provider>
+
     <Dialog.Content class="sm:max-w-[425px]">
         <Dialog.Header>
             <Dialog.Title>{title}</Dialog.Title>
