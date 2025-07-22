@@ -1,5 +1,6 @@
 import { UserTimerPreset } from "@/types";
-import { secondsToTime } from "../lib/timeConverterUtils";
+import { secondsToTime } from "./timeConverterUtils";
+import { showRoundEndNotification } from "./timerNotifier.svelte";
 
 const ONE_SECOND = 1000;
 const MINUTES_TO_SECONDS = 60;
@@ -70,7 +71,8 @@ export class Timer {
 		}
 
 		this.resetCurrentTime();
-		if (this.autoPlay) this.startTimer();
+		showRoundEndNotification(isSessionDone ? 'longBreak' : this.currentRoundIndex % 2 === 0 ? 'work' : 'shortBreak');
+		if (this.autoPlay && this.currentRoundIndex !== 0) this.startTimer();
 	};
 
 	resetCurrentTime = () => {
