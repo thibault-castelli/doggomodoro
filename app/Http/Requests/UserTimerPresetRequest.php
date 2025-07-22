@@ -28,7 +28,7 @@ class UserTimerPresetRequest extends FormRequest
             'long_break_duration' => ['required', 'integer', 'min:1', 'max:60'],
             'long_break_interval' => ['required', 'integer', 'min:1', 'max:10'],
             'auto_play' => ['boolean'],
-            // 'notifications_enabled' => ['boolean'],
+            'notifications' => ['boolean'],
         ];
     }
 }

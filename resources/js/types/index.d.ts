@@ -50,8 +50,7 @@ export interface UserTimerPreset {
     long_break_duration: number;
     long_break_interval: number;
     auto_play: boolean;
-    created_at: string;
-    updated_at: string;
+    notifications: boolean;
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;

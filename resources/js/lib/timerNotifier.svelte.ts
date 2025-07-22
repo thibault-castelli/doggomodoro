@@ -1,15 +1,65 @@
 import { toast } from 'svelte-sonner';
 
-export const showRoundEndNotification = (roundType: 'work' | 'shortBreak' | 'longBreak') => {
-    switch(roundType) {
+// Request notification permission on first load
+if (typeof window !== 'undefined' && 'Notification' in window) {
+    if (Notification.permission === 'default') {
+        Notification.requestPermission();
+    }
+}
+
+const sendBrowserNotification = (title: string, body: string, icon?: string) => {
+    // Check if notifications are supported and permitted
+    if (typeof window === 'undefined' || !('Notification' in window)) {
+        return;
+    }
+
+    if (Notification.permission === 'granted') {
+        const notification = new Notification(title, {
+            body,
+            icon: icon || '/favicon.ico',
+            badge: '/favicon.ico',
+            tag: 'doggomodoro-timer',
+            requireInteraction: false,
+            silent: false
+        });
+
+        setTimeout(() => {
+            notification.close();
+        }, 5000);
+
+        notification.onclick = () => {
+            window.focus();
+            notification.close();
+        };
+    } else if (Notification.permission === 'default') {
+        // Try to request permission again
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                sendBrowserNotification(title, body, icon);
+            }
+        });
+    }
+};
+
+const sendToastNotification = (title: string, body: string) => {
+    toast.message(title, {description: body, duration: 5000});
+}
+
+const sendNotification = (title: string, body: string) => {
+    sendToastNotification(title, body);
+    sendBrowserNotification(title, body);
+}
+
+export const showRoundEndNotification = (passedRoundType: 'work' | 'shortBreak' | 'longBreak'): void => {
+    switch(passedRoundType) {
         case 'work':
-            toast.message('Break time is over! 🐕', {description: 'Time to get back to work. You\'ve got this!', duration: 5000});
+            sendNotification('Break time is over! 🐕', 'Time to get back to work. You\'ve got this!');
             break;
         case 'shortBreak':
-            toast.message('Time for a break! 🎉', {description: 'Take a break and recharge.', duration: 5000});
+            sendNotification('Time for a break! 🎉', 'Take a break and recharge.');
             break;
         case 'longBreak':
-            toast.message('Session Complete! 🎊', {description: 'Congratulations! You\'ve completed your full pomodoro session.', duration: 5000});
+            sendNotification('Session Complete! 🎊', 'Congratulations! You\'ve completed your full pomodoro session.');
             break;
     }
 };

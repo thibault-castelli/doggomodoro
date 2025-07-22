@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->integer('break_duration')->default(5);
             $table->integer('long_break_duration')->default(15);
             $table->integer('long_break_interval')->default(4);
-            $table->boolean('notifications_enabled')->default(true);
+            $table->boolean('notifications')->default(true);
             $table->boolean('auto_play')->default(true);
             $table->timestamps();
         });

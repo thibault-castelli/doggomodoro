@@ -38,6 +38,7 @@
         long_break_duration: z.number().int().min(1).max(60),
         long_break_interval: z.number().int().min(1).max(10),
         auto_play: z.boolean(),
+        notifications: z.boolean(),
     });
 
     const form = useForm({
@@ -47,6 +48,7 @@
         long_break_duration: timerPreset.long_break_duration,
         long_break_interval: timerPreset.long_break_interval,
         auto_play: timerPreset.auto_play,
+        notifications: timerPreset.notifications,
     });
 
     const validateForm = () => {
@@ -57,6 +59,7 @@
             long_break_duration: Number($form.long_break_duration),
             long_break_interval: Number($form.long_break_interval),
             auto_play: Boolean($form.auto_play),
+            notifications: Boolean($form.notifications),
         };
 
         const validation = timerSettingsSchema.safeParse(formatedData);
@@ -125,9 +128,16 @@
                 <InputError class="mt-2" message={$form.errors.long_break_interval} />
             </div>
 
-            <div class="grid gap-2">
-                <Label for="autoPlay">Auto Play</Label>
-                <Checkbox id="autoPlay" class="mt-1 block h-4 w-4" bind:checked={$form.auto_play} />
+            <div class="flex gap-10">
+                <div class="grid gap-2">
+                    <Label for="autoPlay">Auto Play</Label>
+                    <Checkbox id="autoPlay" class="mt-1 block h-4 w-4" bind:checked={$form.auto_play} />
+                </div>
+
+                <div class="grid gap-2">
+                    <Label for="notifications">Notifications</Label>
+                    <Checkbox id="notifications" class="mt-1 block h-4 w-4" bind:checked={$form.notifications} />
+                </div>
             </div>
 
             <div class="flex items-center gap-4">

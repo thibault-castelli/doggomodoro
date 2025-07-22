@@ -2,7 +2,7 @@
     import { Toaster } from '@/components/ui/sonner';
     import AppLayout from '@/layouts/app/AppSidebarLayout.svelte';
     import type { BreadcrumbItemType } from '@/types';
-    import type { Snippet } from 'svelte';
+    import { type Snippet } from 'svelte';
     import { page } from '@inertiajs/svelte';
     import { toast } from 'svelte-sonner';
 

@@ -73,7 +73,8 @@
                     <Table.Head class="w-[200px]">Break Duration (minutes)</Table.Head>
                     <Table.Head class="w-[240px]">Long Break Duration (minutes)</Table.Head>
                     <Table.Head class="w-[160px]">Long Break Interval</Table.Head>
-                    <Table.Head class="w-[80px]">Auto Play</Table.Head>
+                    <Table.Head class="w-[100px]">Auto Play</Table.Head>
+                    <Table.Head class="w-[100px]">Notifications</Table.Head>
                 </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -84,6 +85,7 @@
                     <Table.Cell>{selectedPreset.long_break_duration}</Table.Cell>
                     <Table.Cell>{selectedPreset.long_break_interval}</Table.Cell>
                     <Table.Cell>{selectedPreset.auto_play ? 'Yes' : 'No'}</Table.Cell>
+                    <Table.Cell>{selectedPreset.notifications ? 'Yes' : 'No'}</Table.Cell>
                 </Table.Row>
             </Table.Body>
         </Table.Root>
@@ -115,6 +117,10 @@
                 <Table.Row>
                     <Table.Head>Auto Play</Table.Head>
                     <Table.Cell>{selectedPreset.auto_play ? 'Yes' : 'No'}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                    <Table.Head>Notifications</Table.Head>
+                    <Table.Cell>{selectedPreset.notifications ? 'Yes' : 'No'}</Table.Cell>
                 </Table.Row>
             </Table.Body>
         </Table.Root>

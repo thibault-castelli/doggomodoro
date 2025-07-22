@@ -18,8 +18,8 @@ class UserTimerPreset extends Model
         'break_duration',
         'long_break_duration',
         'long_break_interval',
-        'notifications_enabled',
         'auto_play',
+        'notifications',
     ];
 
     public function user()
@@ -79,6 +79,7 @@ class UserTimerPreset extends Model
             'long_break_interval' => 4,
             'notifications_enabled' => true,
             'auto_play' => false,
+            'notifications' => false,
         ]);
     }
 }

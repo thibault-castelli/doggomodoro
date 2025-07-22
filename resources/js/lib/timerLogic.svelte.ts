@@ -5,7 +5,7 @@ import { showRoundEndNotification } from "./timerNotifier.svelte";
 const ONE_SECOND = 1000;
 const MINUTES_TO_SECONDS = 60;
 
-function createRoundsFromUserTimerSettings(settings: UserTimerPreset): number[] {
+const createRoundsFromUserTimerSettings = (settings: UserTimerPreset): number[] => {
 	const {work_duration, break_duration, long_break_duration, long_break_interval} = settings;
 	const rounds = [];
 
@@ -21,10 +21,11 @@ function createRoundsFromUserTimerSettings(settings: UserTimerPreset): number[] 
 }
 
 export class Timer {
-	constructor(settings: UserTimerPreset) {
-		this.rounds = createRoundsFromUserTimerSettings(settings);
+	constructor(preset: UserTimerPreset) {
+		this.rounds = createRoundsFromUserTimerSettings(preset);
 		this.currentTime = this.rounds.length > 0 ? this.rounds[0] * MINUTES_TO_SECONDS : 0;
-		this.autoPlay = settings.auto_play || false;
+		this.autoPlay = preset.auto_play || false;
+		this.showNotifications = preset.notifications || false;
 	}
 
 	private rounds: number[] = $state([]);
@@ -32,6 +33,7 @@ export class Timer {
 	private currentRoundIndex: number = $state(0);
 	private currentTime: number = $state(0);
 	private autoPlay: boolean = false;
+	private showNotifications: boolean = false;
 
 	readonly isTimerOn: boolean = $derived(this.interval !== undefined);
 	readonly currentTimeDisplay: string = $derived(secondsToTime(this.currentTime));
@@ -71,8 +73,12 @@ export class Timer {
 		}
 
 		this.resetCurrentTime();
-		showRoundEndNotification(isSessionDone ? 'longBreak' : this.currentRoundIndex % 2 === 0 ? 'work' : 'shortBreak');
-		if (this.autoPlay && this.currentRoundIndex !== 0) this.startTimer();
+
+		if (this.showNotifications)
+			showRoundEndNotification(isSessionDone ? 'longBreak' : this.currentRoundIndex % 2 === 0 ? 'work' : 'shortBreak');
+
+		if (this.autoPlay && this.currentRoundIndex !== 0) 
+			this.startTimer();
 	};
 
 	resetCurrentTime = () => {

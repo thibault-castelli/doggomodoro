@@ -26,8 +26,8 @@ class UserTimerPresetFactory extends Factory
             'break_duration' => $this->faker->numberBetween(3, 15),
             'long_break_duration' => $this->faker->numberBetween(10, 30),
             'long_break_interval' => $this->faker->numberBetween(2, 8),
-            'notifications_enabled' => $this->faker->boolean(),
             'auto_play' => $this->faker->boolean(),
+            'notifications' => $this->faker->boolean(),
         ];
     }
 }
