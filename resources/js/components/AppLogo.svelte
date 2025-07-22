@@ -1,5 +1,4 @@
 <script lang="ts">
-    import AppLogoIcon from '@/components/AppLogoIcon.svelte';
     import { Dog } from 'lucide-svelte';
 </script>
 

@@ -5,7 +5,7 @@
     import Heading from '@/components/Heading.svelte';
     import { router } from '@inertiajs/svelte';
     import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.svelte';
-    import { Plus, Pen, Check } from 'lucide-svelte';
+    import { Plus, Pen } from 'lucide-svelte';
     import ButtonWithTooltip from '@/components/ButtonWithTooltip.svelte';
     import * as Table from '@/components/ui/table';
 
@@ -42,7 +42,8 @@
 
     const resetSelectedPresetIdAfterDelete = () => {
         const selectedPresetIndex = timerPresets.findIndex((preset) => preset.id.toString() === selectedPresetId);
-        selectedPresetIndex === 0 ? (selectedPresetId = timerPresets[1].id.toString()) : (selectedPresetId = timerPresets[0].id.toString());
+        if (selectedPresetIndex === 0) selectedPresetId = timerPresets[1].id.toString();
+        else selectedPresetId = timerPresets[0].id.toString();
     };
 </script>
 
