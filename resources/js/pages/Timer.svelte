@@ -7,6 +7,7 @@
     import type { UserTimerPreset, BreadcrumbItem } from '@/types';
     import { onDestroy } from 'svelte';
     import TimerPresetSelect from '@/components/timer/TimerPresetSelect.svelte';
+    import { Link } from '@inertiajs/svelte';
 
     interface Props {
         timerPresets: UserTimerPreset[];
@@ -40,5 +41,6 @@
 
     <div class="mt-12 w-1/2 m-auto">
         <TimerPresetSelect bind:value={selectedPresetId} {timerPresets} />
+        <p class="mt-3 italic text-sm">Need a new preset? <Link href={route('presets.create')} class="underline">Create one here</Link></p>
     </div>
 </AppLayout>

@@ -5,8 +5,9 @@
     import Heading from '@/components/Heading.svelte';
     import { router } from '@inertiajs/svelte';
     import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.svelte';
-    import { Plus, Pen } from 'lucide-svelte';
+    import { Plus, Pen, Check } from 'lucide-svelte';
     import ButtonWithTooltip from '@/components/ButtonWithTooltip.svelte';
+    import * as Table from '@/components/ui/table';
 
     interface Props {
         timerPresets: UserTimerPreset[];
@@ -49,7 +50,7 @@
     <div class="px-4 py-6">
         <Heading title="Timer Presets" description="Configure your timer presets for optimal productivity." />
 
-        <div class="flex flex-col gap-4 mb-4 sm:items-end sm:flex-row">
+        <div class="flex flex-col gap-5 mb-5 sm:items-end sm:flex-row">
             <div class="grow">
                 <TimerPresetSelect bind:value={selectedPresetId} {timerPresets} />
             </div>
@@ -62,16 +63,60 @@
             </div>
         </div>
 
-        <p>Preset Name: <span class="font-bold">{selectedPreset.name}</span></p>
+        <!-- Table on large screen -->
+        <Table.Root class="hidden xl:block">
+            <Table.Caption>Your preset details.</Table.Caption>
+            <Table.Header>
+                <Table.Row>
+                    <Table.Head class="w-[200px]">Name</Table.Head>
+                    <Table.Head class="w-[190px]">Work Duration (minutes)</Table.Head>
+                    <Table.Head class="w-[200px]">Break Duration (minutes)</Table.Head>
+                    <Table.Head class="w-[240px]">Long Break Duration (minutes)</Table.Head>
+                    <Table.Head class="w-[160px]">Long Break Interval</Table.Head>
+                    <Table.Head class="w-[80px]">Auto Play</Table.Head>
+                </Table.Row>
+            </Table.Header>
+            <Table.Body>
+                <Table.Row>
+                    <Table.Cell class="font-bold">{selectedPreset.name}</Table.Cell>
+                    <Table.Cell>{selectedPreset.work_duration}</Table.Cell>
+                    <Table.Cell>{selectedPreset.break_duration}</Table.Cell>
+                    <Table.Cell>{selectedPreset.long_break_duration}</Table.Cell>
+                    <Table.Cell>{selectedPreset.long_break_interval}</Table.Cell>
+                    <Table.Cell>{selectedPreset.auto_play ? 'Yes' : 'No'}</Table.Cell>
+                </Table.Row>
+            </Table.Body>
+        </Table.Root>
 
-        <p>Work Duration (minutes): <span class="font-bold">{selectedPreset.work_duration}</span></p>
-
-        <p>Break Duration (minutes): <span class="font-bold">{selectedPreset.break_duration}</span></p>
-
-        <p>Long Break Duration (minutes): <span class="font-bold">{selectedPreset.long_break_duration}</span></p>
-
-        <p>Long Break Interval: <span class="font-bold">{selectedPreset.long_break_interval}</span></p>
-
-        <p>Auto Play:<span class="font-bold">{selectedPreset.auto_play ? 'Yes' : 'No'}</span></p>
+        <!-- Table on small screen -->
+        <Table.Root class=" xl:hidden">
+            <Table.Caption>Your preset informations.</Table.Caption>
+            <Table.Body>
+                <Table.Row>
+                    <Table.Head>Name</Table.Head>
+                    <Table.Cell>{selectedPreset.name}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                    <Table.Head>Work Duration</Table.Head>
+                    <Table.Cell>{selectedPreset.work_duration}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                    <Table.Head>Break Duration</Table.Head>
+                    <Table.Cell>{selectedPreset.break_duration}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                    <Table.Head>Long Break Duration</Table.Head>
+                    <Table.Cell>{selectedPreset.long_break_duration}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                    <Table.Head>Long Break Interval</Table.Head>
+                    <Table.Cell>{selectedPreset.long_break_interval}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                    <Table.Head>Auto Play</Table.Head>
+                    <Table.Cell>{selectedPreset.auto_play ? 'Yes' : 'No'}</Table.Cell>
+                </Table.Row>
+            </Table.Body>
+        </Table.Root>
     </div>
 </AppLayout>
