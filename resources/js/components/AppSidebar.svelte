@@ -5,23 +5,44 @@
     import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
     import { type NavItem } from '@/types';
     import { Link } from '@inertiajs/svelte';
-    import { Github, LayoutGrid, Clock, Settings2 } from 'lucide-svelte';
+    import { Github, LayoutGrid, Clock, Settings2, User, BookCheck } from 'lucide-svelte';
     import AppLogo from './AppLogo.svelte';
+    import { page } from '@inertiajs/svelte';
+
+    const user = $derived($page.props.auth.user);
+
+    const mainNavItemsGuest: NavItem[] = [
+        {
+            title: 'Timer',
+            href: route('timer'),
+            icon: Clock,
+        },
+        {
+            title: 'Login',
+            href: route('login'),
+            icon: User,
+        },
+        {
+            title: 'Register',
+            href: route('register'),
+            icon: BookCheck,
+        },
+    ];
 
     const mainNavItems: NavItem[] = [
         {
             title: 'Timer',
-            href: '/timer',
+            href: route('timer'),
             icon: Clock,
         },
         {
             title: 'Dashboard',
-            href: '/dashboard',
+            href: route('dashboard'),
             icon: LayoutGrid,
         },
         {
             title: 'Presets',
-            href: '/presets',
+            href: route('presets'),
             icon: Settings2,
         },
     ];
@@ -49,11 +70,14 @@
     </SidebarHeader>
 
     <SidebarContent>
-        <NavMain items={mainNavItems} />
+        <NavMain items={user ? mainNavItems : mainNavItemsGuest} />
     </SidebarContent>
 
     <SidebarFooter>
         <NavFooter items={footerNavItems} class="mt-auto" />
-        <NavUser />
+
+        {#if user}
+            <NavUser />
+        {/if}
     </SidebarFooter>
 </Sidebar>

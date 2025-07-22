@@ -12,6 +12,7 @@ class UserTimerPreset extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'user_id',
         'name',
         'work_duration',
@@ -72,7 +73,9 @@ class UserTimerPreset extends Model
     public static function defaultPreset(): UserTimerPreset
     {
         return new self([
+            'id' => 0,
             'name' => 'Default Timer Preset',
+            'user_id' => -1,
             'work_duration' => 25,
             'break_duration' => 5,
             'long_break_duration' => 15,
