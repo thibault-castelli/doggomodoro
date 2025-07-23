@@ -23,7 +23,7 @@
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Timer',
-            href: '/timer',
+            href: route('timer'),
         },
     ];
 
