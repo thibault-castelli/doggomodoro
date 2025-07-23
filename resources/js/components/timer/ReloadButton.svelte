@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Square from '@lucide/svelte/icons/square';
     import Rotate from '@lucide/svelte/icons/rotate-ccw';
     import * as Tooltip from '../ui/tooltip';
     import { buttonVariants } from '../ui/button';
