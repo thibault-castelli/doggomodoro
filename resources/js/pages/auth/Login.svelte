@@ -47,6 +47,7 @@
         return true;
     };
 
+    // Do not validate on first blur because email input is autofocused.
     let isFirstBlurOnEmail = $state(true);
     const validateEmail = () => {
         if (isFirstBlurOnEmail) {

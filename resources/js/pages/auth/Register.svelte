@@ -146,7 +146,7 @@
     <title>Register</title>
 </svelte:head>
 
-<AuthBase title="Create an account" description="Enter your details below to create your account">
+<AuthBase title="Create an account">
     <form onsubmit={submit} class="flex flex-col gap-6">
         <div class="grid gap-6">
             <div class="grid gap-2">
