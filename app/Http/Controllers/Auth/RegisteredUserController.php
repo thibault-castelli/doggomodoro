@@ -53,4 +53,15 @@ class RegisteredUserController extends Controller
 
         return to_route('timer');
     }
+
+    public function checkEmail(Request $request)
+    {
+        $email = $request->input('email');
+
+        if (!$email)
+            return response()->json(['error' => 'Email is required'], 400);
+
+        $exists = User::where('email', $email)->exists();
+        return response()->json(['exists' => $exists]);
+    }
 }
