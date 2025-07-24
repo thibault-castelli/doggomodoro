@@ -47,6 +47,19 @@
         return true;
     };
 
+    const validateField = (fieldName: 'email' | 'password', schema: z.ZodTypeAny) => {
+        const value = $form[fieldName];
+
+        const validation = schema.safeParse(value);
+        if (!validation.success) {
+            $form.errors[fieldName] = validation.error.format()._errors[0];
+            return false;
+        }
+
+        $form.errors[fieldName] = '';
+        return true;
+    };
+
     // Do not validate on first blur because email input is autofocused.
     let isFirstBlurOnEmail = $state(true);
     const validateEmail = () => {
@@ -55,24 +68,10 @@
             return true;
         }
 
-        const validation = emailSchema.safeParse($form.email);
-        if (!validation.success) {
-            $form.errors.email = validation.error.format()._errors[0];
-            return false;
-        }
-        $form.errors.email = '';
-        return true;
+        return validateField('email', emailSchema);
     };
 
-    const validatePassword = () => {
-        const validation = passwordSchema.safeParse($form.password);
-        if (!validation.success) {
-            $form.errors.password = validation.error.format()._errors[0];
-            return false;
-        }
-        $form.errors.password = '';
-        return true;
-    };
+    const validatePassword = () => validateField('password', passwordSchema);
 
     let { status, canResetPassword }: Props = $props();
 

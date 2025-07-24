@@ -11,10 +11,12 @@
     import { LoaderCircle } from 'lucide-svelte';
     import { z } from 'zod';
 
-    const registerSchema = z
+    const nameSchema = z.string().min(1, 'Name is required');
+    const emailSchema = z.string().email();
+    const passwordSchema = z.string().min(1, 'Password is required');
+
+    const passwordConfirmationSchema = z
         .object({
-            name: z.string().min(1, 'Name is required'),
-            email: z.string().email(),
             password: z.string().min(1, 'Password is required'),
             password_confirmation: z.string().min(1, 'Confirm password is required'),
         })
@@ -23,12 +25,11 @@
             path: ['password_confirmation'],
         });
 
-    const nameSchema = z.string().min(1, 'Name is required');
-    const emailSchema = z.string().email();
-    const passwordSchema = z.string().min(1, 'Password is required');
-    const passwordConfirmationSchema = z
+    const registerSchema = z
         .object({
-            password: z.string().min(1, 'Password is required'),
+            name: nameSchema,
+            email: emailSchema,
+            password: passwordSchema,
             password_confirmation: z.string().min(1, 'Confirm password is required'),
         })
         .refine((data) => data.password === data.password_confirmation, {
@@ -64,6 +65,23 @@
         return true;
     };
 
+    const validateField = async (fieldName: 'name' | 'email' | 'password', schema: z.ZodTypeAny, remoteValidation?: () => Promise<boolean>) => {
+        const value = $form[fieldName];
+
+        const validation = schema.safeParse(value);
+        if (!validation.success) {
+            $form.errors[fieldName] = validation.error.format()._errors[0];
+            return false;
+        }
+
+        if (remoteValidation) {
+            if (!(await remoteValidation())) return false;
+        }
+
+        $form.errors[fieldName] = '';
+        return true;
+    };
+
     // Do not validate on first blur because name input is autofocused.
     let isFirstBlurOnName = $state(true);
     const validateName = () => {
@@ -72,13 +90,7 @@
             return true;
         }
 
-        const validation = nameSchema.safeParse($form.name);
-        if (!validation.success) {
-            $form.errors.name = validation.error.format()._errors[0];
-            return false;
-        }
-        $form.errors.name = '';
-        return true;
+        return validateField('name', nameSchema);
     };
 
     const validateEmailExists = async () => {
@@ -87,32 +99,15 @@
             $form.errors.email = 'This email is already registered';
             return false;
         }
+
         return true;
     };
 
-    const validateEmail = async () => {
-        const validation = emailSchema.safeParse($form.email);
-        if (!validation.success) {
-            $form.errors.email = validation.error.format()._errors[0];
-            return false;
-        }
-
-        if (!(await validateEmailExists())) return false;
-
-        $form.errors.email = '';
-        return true;
-    };
+    const validateEmail = async () => await validateField('email', emailSchema, validateEmailExists);
 
     const validatePassword = () => {
         if ($form.password_confirmation) validatePasswordConfirmation();
-
-        const validation = passwordSchema.safeParse($form.password);
-        if (!validation.success) {
-            $form.errors.password = validation.error.format()._errors[0];
-            return false;
-        }
-        $form.errors.password = '';
-        return true;
+        return validateField('password', passwordSchema);
     };
 
     const validatePasswordConfirmation = () => {
@@ -123,7 +118,6 @@
 
         const validation = passwordConfirmationSchema.safeParse(formatedData);
         if (!validation.success) {
-            console.log(validation.error.format().password_confirmation?._errors[0]);
             $form.errors.password_confirmation = validation.error.format().password_confirmation?._errors[0];
             return false;
         }
