@@ -4,7 +4,7 @@
 
     interface Props {
         title: string;
-        description: string;
+        description?: string;
         children?: Snippet;
     }
 

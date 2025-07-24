@@ -6,13 +6,23 @@
     import { Input } from '@/components/ui/input';
     import { Label } from '@/components/ui/label';
     import AuthBase from '@/layouts/AuthLayout.svelte';
+    import { mapZodErrosToFormErrors } from '@/lib/formValidationUtils';
     import { useForm } from '@inertiajs/svelte';
     import { LoaderCircle } from 'lucide-svelte';
+    import { z } from 'zod';
 
     interface Props {
         status?: string;
         canResetPassword: boolean;
     }
+
+    const loginSchema = z.object({
+        email: z.string().email(),
+        password: z.string().min(1, 'Password is required'),
+        remember: z.boolean(),
+    });
+    const emailSchema = loginSchema.shape.email;
+    const passwordSchema = loginSchema.shape.password;
 
     const form = useForm({
         email: '',
@@ -20,10 +30,50 @@
         remember: false,
     });
 
+    const validateForm = () => {
+        const formatedData = {
+            email: $form.email,
+            password: $form.password,
+            remember: Boolean($form.remember),
+        };
+
+        const validation = loginSchema.safeParse(formatedData);
+        if (!validation.success) {
+            $form.errors = mapZodErrosToFormErrors(validation.error);
+            return false;
+        }
+
+        $form.errors = {};
+        return true;
+    };
+
+    const validateEmail = () => {
+        const validation = emailSchema.safeParse($form.email);
+        if (!validation.success) {
+            $form.errors.email = validation.error.format()._errors[0];
+            return false;
+        }
+        $form.errors.email = '';
+        return true;
+    };
+
+    const validatePassword = () => {
+        const validation = passwordSchema.safeParse($form.password);
+        if (!validation.success) {
+            $form.errors.password = validation.error.format()._errors[0];
+            return false;
+        }
+        $form.errors.password = '';
+        return true;
+    };
+
     let { status, canResetPassword }: Props = $props();
 
     const submit = (e: Event) => {
         e.preventDefault();
+
+        if (!validateForm()) return;
+
         $form.post(route('login'), {
             onFinish: () => $form.reset('password'),
         });
@@ -34,7 +84,7 @@
     <title>Login</title>
 </svelte:head>
 
-<AuthBase title="Log in to your account" description="Enter your email and password below to log in">
+<AuthBase title="Log in to your account">
     {#if status}
         <div class="mb-4 text-center text-sm font-medium text-green-600">
             {status}
@@ -48,12 +98,12 @@
                 <Input
                     id="email"
                     type="email"
-                    required
                     autofocus
                     tabindex={1}
                     autocomplete="email"
                     bind:value={$form.email}
                     placeholder="email@example.com"
+                    onblur={validateEmail}
                 />
                 <InputError message={$form.errors.email} />
             </div>
@@ -68,11 +118,11 @@
                 <Input
                     id="password"
                     type="password"
-                    required
                     tabindex={2}
                     autocomplete="current-password"
                     bind:value={$form.password}
                     placeholder="Password"
+                    onblur={validatePassword}
                 />
                 <InputError message={$form.errors.password} />
             </div>

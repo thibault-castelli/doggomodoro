@@ -100,7 +100,7 @@
         <form onsubmit={submit} class="space-y-4">
             <div class="grid gap-2">
                 <Label for="name">Preset Name</Label>
-                <Input id="name" type="text" class="mt-1 block w-full" bind:value={$form.name} onblur={validateForm} />
+                <Input id="name" type="text" class="mt-1 block w-full" autofocus bind:value={$form.name} onblur={validateForm} />
                 <InputError class="mt-2" message={$form.errors.name} />
             </div>
 

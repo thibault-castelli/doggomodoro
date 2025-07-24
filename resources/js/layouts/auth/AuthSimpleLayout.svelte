@@ -1,11 +1,12 @@
 <script lang="ts">
+    import AppLogo from '@/components/AppLogo.svelte';
     import AppLogoIcon from '@/components/AppLogoIcon.svelte';
     import { Link } from '@inertiajs/svelte';
     import type { Snippet } from 'svelte';
 
     interface Props {
         title: string;
-        description: string;
+        description?: string;
         children?: Snippet;
     }
 
@@ -18,13 +19,15 @@
             <div class="flex flex-col items-center gap-4">
                 <Link href={route('timer')} class="flex flex-col items-center gap-2 font-medium">
                     <div class="mb-1 flex h-9 w-9 items-center justify-center rounded-md">
-                        <AppLogoIcon class="size-9 fill-current text-[var(--foreground)] dark:text-white" />
+                        <AppLogo />
                     </div>
                     <span class="sr-only">{title}</span>
                 </Link>
                 <div class="space-y-2 text-center">
                     <h1 class="text-xl font-medium">{title}</h1>
-                    <p class="text-center text-sm text-muted-foreground">{description}</p>
+                    {#if description}
+                        <p class="text-center text-sm text-muted-foreground">{description}</p>
+                    {/if}
                 </div>
             </div>
             {@render children?.()}
