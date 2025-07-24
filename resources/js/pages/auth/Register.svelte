@@ -64,7 +64,14 @@
         return true;
     };
 
+    // Do not validate on first blur because name input is autofocused.
+    let isFirstBlurOnName = $state(true);
     const validateName = () => {
+        if (isFirstBlurOnName) {
+            isFirstBlurOnName = false;
+            return true;
+        }
+
         const validation = nameSchema.safeParse($form.name);
         if (!validation.success) {
             $form.errors.name = validation.error.format()._errors[0];

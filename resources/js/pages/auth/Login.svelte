@@ -47,7 +47,13 @@
         return true;
     };
 
+    let isFirstBlurOnEmail = $state(true);
     const validateEmail = () => {
+        if (isFirstBlurOnEmail) {
+            isFirstBlurOnEmail = false;
+            return true;
+        }
+
         const validation = emailSchema.safeParse($form.email);
         if (!validation.success) {
             $form.errors.email = validation.error.format()._errors[0];
