@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Timer;
 
 use App\Http\Requests\UserTimerPresetRequest;
 use App\Http\Controllers\Controller;

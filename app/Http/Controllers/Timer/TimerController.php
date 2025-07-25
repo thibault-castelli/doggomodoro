@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Timer;
 
+use App\Http\Controllers\Controller;
 use App\Models\UserTimerPreset;
 use Illuminate\Support\Facades\Auth;
 

@@ -32,9 +32,10 @@ class UserTimerPreset extends Model
      * Get all timer presets for a specific user.
      *
      * @param int|null $userId
+     * @throws \InvalidArgumentException if user id is not a number or is less than or equal to zero.
      * @return Collection<int, UserTimerPreset>
      */
-    public static function forUser($userId): Collection
+    public static function forUser(int|null $userId): Collection
     {
         if (!$userId)
             return collect([self::defaultPreset()]);
@@ -49,9 +50,10 @@ class UserTimerPreset extends Model
      * Get one timer preset for a specific user.
      * @param mixed $userId
      * @param mixed $presetId
+     * @throws \InvalidArgumentException if user id or preset id is not a number or is less than or equal to zero.
      * @return ?UserTimerPreset
      */
-    public static function forUserSingle($userId, $presetId): ?UserTimerPreset
+    public static function forUserSingle(int|null $userId, int|null $presetId): ?UserTimerPreset
     {
         if (!$userId)
             return self::defaultPreset();
@@ -62,7 +64,12 @@ class UserTimerPreset extends Model
         return self::where(['user_id' => $userId, 'id' => $presetId])->firstOrFail();
     }
 
-    public static function forUserCount($userId): int
+    /**
+     * Get timer preset count for a specific user.
+     * @param mixed $userId
+     * @return int
+     */
+    public static function forUserCount(int|null $userId): int
     {
         if (!$userId)
             return 0;
@@ -70,6 +77,10 @@ class UserTimerPreset extends Model
         return self::where('user_id', $userId)->count();
     }
 
+    /**
+     * Get a default timer preset
+     * @return UserTimerPreset
+     */
     public static function defaultPreset(): UserTimerPreset
     {
         return new self([

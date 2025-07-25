@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\UserTimerPreset;
+use App\Models\UserTimerStats;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,6 +23,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         UserTimerPreset::factory(2)->create([
+            'user_id' => $testUser->id,
+        ]);
+
+        UserTimerStats::factory(1)->create([
             'user_id' => $testUser->id,
         ]);
     }

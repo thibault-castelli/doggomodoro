@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\TimerController;
-use App\Http\Controllers\UserTimerPresetController;
+use App\Http\Controllers\Timer\TimerController;
+use App\Http\Controllers\Timer\UserTimerPresetController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
