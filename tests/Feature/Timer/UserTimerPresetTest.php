@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Timer;
 
 use App\Models\User;
 use App\Models\UserTimerPreset;
@@ -10,6 +10,8 @@ use Tests\TestCase;
 class UserTimerPresetTest extends TestCase
 {
     use RefreshDatabase;
+
+    private User $user;
 
     protected function setUp(): void
     {
