@@ -29,7 +29,7 @@ class UserTimerStats extends Model
      * @throws \InvalidArgumentException if user id is not a number or is less than or equal to zero.
      * @return UserTimerStats
      */
-    public function forUser(int|null $userId): UserTimerStats
+    public static function forUser(int|null $userId): UserTimerStats
     {
         if ($userId)
             return self::defaultTimerStats();
