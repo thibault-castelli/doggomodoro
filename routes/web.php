@@ -2,15 +2,13 @@
 
 use App\Http\Controllers\Timer\TimerController;
 use App\Http\Controllers\Timer\UserTimerPresetController;
+use App\Http\Controllers\Timer\UserTimerStatsController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', [TimerController::class, 'index'])->name('timer');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('dashboard', [UserTimerStatsController::class, 'show'])->name('dashboard');
 
     Route::get('/presets', [UserTimerPresetController::class, 'show'])->name('presets');
     Route::get('/presets/create', [UserTimerPresetController::class, 'create'])->name('presets.create');

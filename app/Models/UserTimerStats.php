@@ -31,7 +31,7 @@ class UserTimerStats extends Model
      */
     public static function forUser(int|null $userId): UserTimerStats
     {
-        if ($userId)
+        if (!$userId)
             return self::defaultTimerStats();
 
         if (!is_numeric($userId) || $userId <= 0)

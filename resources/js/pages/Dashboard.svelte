@@ -1,7 +1,17 @@
 <script lang="ts">
-    import PlaceholderPattern from '@/components/PlaceholderPattern.svelte';
     import AppLayout from '@/layouts/AppLayout.svelte';
-    import { type BreadcrumbItem } from '@/types';
+    import * as Table from '@/components/ui/table';
+    import type { UserTimerStats, BreadcrumbItem } from '@/types';
+    import { minutesToTime } from '@/lib/timeConverterUtils';
+    import Heading from '@/components/Heading.svelte';
+    import HeadingSmall from '@/components/HeadingSmall.svelte';
+
+    interface Props {
+        timerStats: UserTimerStats;
+    }
+
+    const { timerStats }: Props = $props();
+    console.log(timerStats);
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
@@ -13,19 +23,31 @@
 
 <AppLayout title="Dashboard" {breadcrumbs}>
     <div class="space-y-4 px-4 pt-4">
-        <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                <PlaceholderPattern class="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-            </div>
-            <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                <PlaceholderPattern class="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-            </div>
-            <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                <PlaceholderPattern class="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-            </div>
-        </div>
-        <div class="relative h-[calc(100vh-21rem)] overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-            <PlaceholderPattern class="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-        </div>
+        <Heading title="Dashboard" description="View your dashboard and timer statistics." />
+
+        <section>
+            <HeadingSmall title="Timer Statistics" />
+            <Table.Root>
+                <Table.Caption>Your timer statistics.</Table.Caption>
+                <Table.Body>
+                    <Table.Row>
+                        <Table.Head>Total Work Time</Table.Head>
+                        <Table.Cell>{minutesToTime(timerStats.total_work_time)}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Head>Total Break Time</Table.Head>
+                        <Table.Cell>{minutesToTime(timerStats.total_break_time)}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Head>Total Rounds Completed</Table.Head>
+                        <Table.Cell>{timerStats.total_rounds_completed}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Head>Total Sessions Completed</Table.Head>
+                        <Table.Cell>{timerStats.total_sessions_completed}</Table.Cell>
+                    </Table.Row>
+                </Table.Body>
+            </Table.Root>
+        </section>
     </div>
 </AppLayout>

@@ -53,4 +53,13 @@ export interface UserTimerPreset {
     notifications: boolean;
 }
 
+export interface UserTimerStats {
+    id: number;
+    user_id: number;
+    total_work_time: number;
+    total_break_time: number;
+    total_rounds_completed: number;
+    total_sessions_completed: number;
+}
+
 export type BreadcrumbItemType = BreadcrumbItem;

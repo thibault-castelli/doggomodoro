@@ -12,7 +12,7 @@ class UserTimerStatsController extends Controller
 {
     public function show()
     {
-        return Inertia::render('', [
+        return Inertia::render('Dashboard', [
             'timerStats' => UserTimerStats::forUser(Auth::id())
         ]);
     }
