@@ -1,6 +1,6 @@
 import { UserTimerPreset } from "@/types";
-import { secondsToTime } from "./timeConverterUtils";
-import { showRoundEndNotification } from "./timerNotifier.svelte";
+import { secondsToTime } from "../utils/timeConverter";
+import { showRoundEndNotification } from "../utils/timerNotifier.svelte";
 
 const ONE_SECOND = 1000;
 const MINUTES_TO_SECONDS = 60;

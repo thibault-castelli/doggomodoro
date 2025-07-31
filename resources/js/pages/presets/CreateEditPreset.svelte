@@ -5,11 +5,11 @@
     import { useForm } from '@inertiajs/svelte';
     import Label from '@/components/ui/label/label.svelte';
     import Input from '@/components/ui/input/input.svelte';
-    import InputError from '@/components/InputError.svelte';
+    import InputError from '@/components/forms/InputError.svelte';
     import Checkbox from '@/components/ui/checkbox/checkbox.svelte';
     import Button from '@/components/ui/button/button.svelte';
     import { z } from 'zod';
-    import { mapZodErrosToFormErrors } from '@/lib/formValidationUtils';
+    import { mapZodErrosToFormErrors } from '@/lib/utils/zodErrorMapper';
 
     interface Props {
         isCreateMode: boolean;

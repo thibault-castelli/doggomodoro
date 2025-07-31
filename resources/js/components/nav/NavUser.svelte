@@ -1,6 +1,6 @@
 <script lang="ts">
-    import UserInfo from '@/components/UserInfo.svelte';
-    import UserMenuContent from '@/components/UserMenuContent.svelte';
+    import UserInfo from '@/components/nav/UserInfo.svelte';
+    import UserMenuContent from '@/components/nav/UserMenuContent.svelte';
     import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
     import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
     import { page } from '@inertiajs/svelte';

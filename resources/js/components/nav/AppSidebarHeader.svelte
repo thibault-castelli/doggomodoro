@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Breadcrumbs from '@/components/Breadcrumbs.svelte';
+    import Breadcrumbs from '@/components/nav/Breadcrumbs.svelte';
     import { SidebarTrigger } from '@/components/ui/sidebar';
     import type { BreadcrumbItem } from '@/types';
 

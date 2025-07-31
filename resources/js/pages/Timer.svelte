@@ -3,7 +3,7 @@
     import StopReloadButton from '@/components/timer/StopButton.svelte';
     import TimerDisplay from '@/components/timer/TimerDisplay.svelte';
     import AppLayout from '@/layouts/AppLayout.svelte';
-    import { Timer } from '@/lib/timerLogic.svelte';
+    import { Timer } from '@/lib/models/timer.svelte';
     import type { UserTimerPreset, BreadcrumbItem } from '@/types';
     import { onDestroy } from 'svelte';
     import TimerPresetSelect from '@/components/timer/TimerPresetSelect.svelte';

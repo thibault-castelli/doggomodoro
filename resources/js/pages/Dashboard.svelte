@@ -2,8 +2,8 @@
     import AppLayout from '@/layouts/AppLayout.svelte';
     import * as Table from '@/components/ui/table';
     import type { UserTimerStats, BreadcrumbItem } from '@/types';
-    import { minutesToTime } from '@/lib/timeConverterUtils';
-    import Heading from '@/components/Heading.svelte';
+    import { minutesToTime } from '@/lib/utils/timeConverter';
+    import Heading from '@/components/headings/Heading.svelte';
     import HeadingSmall from '@/components/HeadingSmall.svelte';
 
     interface Props {

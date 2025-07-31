@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Timer;
 
-use App\Http\Requests\UserTimerPresetRequest;
+use App\Http\Requests\Timer\UserTimerPresetRequest;
 use App\Http\Controllers\Controller;
 use App\Models\UserTimerPreset;
 use Exception;

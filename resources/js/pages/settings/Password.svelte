@@ -1,6 +1,6 @@
 <script lang="ts">
     import HeadingSmall from '@/components/HeadingSmall.svelte';
-    import InputError from '@/components/InputError.svelte';
+    import InputError from '@/components/forms/InputError.svelte';
     import { Button } from '@/components/ui/button';
     import { Input } from '@/components/ui/input';
     import { Label } from '@/components/ui/label';

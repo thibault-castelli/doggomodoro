@@ -1,8 +1,8 @@
 <script lang="ts">
     import { Trash } from 'lucide-svelte';
-    import Button, { buttonVariants } from './ui/button/button.svelte';
-    import * as Dialog from './ui/dialog';
-    import * as Tooltip from './ui/tooltip';
+    import Button, { buttonVariants } from '../ui/button/button.svelte';
+    import * as Dialog from '../ui/dialog';
+    import * as Tooltip from '../ui/tooltip';
 
     interface Props {
         title: string;

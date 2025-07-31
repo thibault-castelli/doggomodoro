@@ -1,7 +1,7 @@
 <script lang="ts">
-    import DeleteUser from '@/components/DeleteUser.svelte';
+    import DeleteUser from '@/components/profile/DeleteUser.svelte';
     import HeadingSmall from '@/components/HeadingSmall.svelte';
-    import InputError from '@/components/InputError.svelte';
+    import InputError from '@/components/forms/InputError.svelte';
     import { Button } from '@/components/ui/button';
     import { Input } from '@/components/ui/input';
     import { Label } from '@/components/ui/label';

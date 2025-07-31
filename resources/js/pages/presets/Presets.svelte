@@ -2,9 +2,9 @@
     import type { UserTimerPreset, BreadcrumbItem } from '@/types';
     import AppLayout from '@/layouts/AppLayout.svelte';
     import TimerPresetSelect from '@/components/timer/TimerPresetSelect.svelte';
-    import Heading from '@/components/Heading.svelte';
+    import Heading from '@/components/headings/Heading.svelte';
     import { router } from '@inertiajs/svelte';
-    import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.svelte';
+    import ConfirmDeleteDialog from '@/components/modals/ConfirmDeleteDialog.svelte';
     import { Plus, Pen } from 'lucide-svelte';
     import ButtonWithTooltip from '@/components/ButtonWithTooltip.svelte';
     import * as Table from '@/components/ui/table';

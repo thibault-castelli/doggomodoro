@@ -1,11 +1,11 @@
 <script lang="ts">
-    import InputError from '@/components/InputError.svelte';
+    import InputError from '@/components/forms/InputError.svelte';
     import TextLink from '@/components/TextLink.svelte';
     import { Button } from '@/components/ui/button';
     import { Input } from '@/components/ui/input';
     import { Label } from '@/components/ui/label';
     import AuthBase from '@/layouts/AuthLayout.svelte';
-    import { mapZodErrosToFormErrors } from '@/lib/formValidationUtils';
+    import { mapZodErrosToFormErrors } from '@/lib/utils/zodErrorMapper';
     import { useForm } from '@inertiajs/svelte';
     import axios from 'axios';
     import { LoaderCircle } from 'lucide-svelte';

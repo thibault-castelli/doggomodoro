@@ -1,5 +1,5 @@
 <script lang="ts">
-    import UserInfo from '@/components/UserInfo.svelte';
+    import UserInfo from '@/components/nav/UserInfo.svelte';
     import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
     import type { User } from '@/types';
     import { Link, router } from '@inertiajs/svelte';
