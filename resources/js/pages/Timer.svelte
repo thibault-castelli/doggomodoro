@@ -15,8 +15,7 @@
         timerPresets: UserTimerPreset[];
     }
 
-    let { timerPresets }: Props = $props();
-    console.log(timerPresets);
+    const { timerPresets }: Props = $props();
 
     const user = $derived($page.props.auth.user);
 

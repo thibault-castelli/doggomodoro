@@ -52,7 +52,7 @@
         <Heading title="Timer Presets" description="Configure your timer presets for optimal productivity." />
 
         <div class="flex flex-col gap-5 mb-5 sm:items-end sm:flex-row">
-            <div class="grow">
+            <div class="grow w-full sm:max-w-[50%]">
                 <TimerPresetSelect bind:value={selectedPresetId} {timerPresets} />
             </div>
             <div class="flex justify-around gap-2 grow sm:justify-start">
@@ -68,35 +68,7 @@
             </div>
         </div>
 
-        <!-- Table on large screen -->
-        <Table.Root class="hidden xl:block">
-            <Table.Caption>Your preset details.</Table.Caption>
-            <Table.Header>
-                <Table.Row>
-                    <Table.Head class="w-[200px]">Name</Table.Head>
-                    <Table.Head class="w-[190px]">Work Duration (minutes)</Table.Head>
-                    <Table.Head class="w-[200px]">Break Duration (minutes)</Table.Head>
-                    <Table.Head class="w-[240px]">Long Break Duration (minutes)</Table.Head>
-                    <Table.Head class="w-[160px]">Long Break Interval</Table.Head>
-                    <Table.Head class="w-[100px]">Auto Play</Table.Head>
-                    <Table.Head class="w-[100px]">Notifications</Table.Head>
-                </Table.Row>
-            </Table.Header>
-            <Table.Body>
-                <Table.Row>
-                    <Table.Cell class="font-bold">{selectedPreset.name}</Table.Cell>
-                    <Table.Cell>{selectedPreset.work_duration}</Table.Cell>
-                    <Table.Cell>{selectedPreset.break_duration}</Table.Cell>
-                    <Table.Cell>{selectedPreset.long_break_duration}</Table.Cell>
-                    <Table.Cell>{selectedPreset.long_break_interval}</Table.Cell>
-                    <Table.Cell>{selectedPreset.auto_play ? 'Yes' : 'No'}</Table.Cell>
-                    <Table.Cell>{selectedPreset.notifications ? 'Yes' : 'No'}</Table.Cell>
-                </Table.Row>
-            </Table.Body>
-        </Table.Root>
-
-        <!-- Table on small screen -->
-        <Table.Root class=" xl:hidden">
+        <Table.Root>
             <Table.Caption>Your preset informations.</Table.Caption>
             <Table.Body>
                 <Table.Row>
@@ -105,15 +77,15 @@
                 </Table.Row>
                 <Table.Row>
                     <Table.Head>Work Duration</Table.Head>
-                    <Table.Cell>{selectedPreset.work_duration}</Table.Cell>
+                    <Table.Cell>{selectedPreset.work_duration} minutes</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                     <Table.Head>Break Duration</Table.Head>
-                    <Table.Cell>{selectedPreset.break_duration}</Table.Cell>
+                    <Table.Cell>{selectedPreset.break_duration} minutes</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                     <Table.Head>Long Break Duration</Table.Head>
-                    <Table.Cell>{selectedPreset.long_break_duration}</Table.Cell>
+                    <Table.Cell>{selectedPreset.long_break_duration} minutes</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                     <Table.Head>Long Break Interval</Table.Head>
