@@ -4,14 +4,13 @@
     import type { UserTimerStats, BreadcrumbItem } from '@/types';
     import { minutesToTime } from '@/lib/utils/timeConverter';
     import Heading from '@/components/headings/Heading.svelte';
-    import HeadingSmall from '@/components/HeadingSmall.svelte';
+    import HeadingSmall from '@/components/headings/HeadingSmall.svelte';
 
     interface Props {
         timerStats: UserTimerStats;
     }
 
     const { timerStats }: Props = $props();
-    console.log(timerStats);
 
     const breadcrumbs: BreadcrumbItem[] = [
         {

@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { UserTimerPreset, BreadcrumbItem } from '@/types';
     import AppLayout from '@/layouts/AppLayout.svelte';
-    import HeadingSmall from '@/components/HeadingSmall.svelte';
+    import HeadingSmall from '@/components/headings/HeadingSmall.svelte';
     import { useForm } from '@inertiajs/svelte';
     import Label from '@/components/ui/label/label.svelte';
     import Input from '@/components/ui/input/input.svelte';

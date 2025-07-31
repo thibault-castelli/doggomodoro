@@ -1,6 +1,6 @@
 <script lang="ts">
     import AppearanceTabs from '@/components/profile/AppearanceTabs.svelte';
-    import HeadingSmall from '@/components/HeadingSmall.svelte';
+    import HeadingSmall from '@/components/headings/HeadingSmall.svelte';
     import { type BreadcrumbItem } from '@/types';
 
     import AppLayout from '@/layouts/AppLayout.svelte';
