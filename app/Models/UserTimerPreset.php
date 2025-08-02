@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
 
@@ -23,7 +24,7 @@ class UserTimerPreset extends Model
         'notifications',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -31,55 +32,60 @@ class UserTimerPreset extends Model
     /**
      * Get all timer presets for a specific user.
      *
-     * @param int|null $userId
-     * @throws \InvalidArgumentException if user id is not a number or is less than or equal to zero.
      * @return Collection<int, UserTimerPreset>
+     *
+     * @throws InvalidArgumentException if user id is not a number or is less than or equal to zero.
      */
-    public static function forUser(int|null $userId): Collection
+    public static function forUser(?int $userId): Collection
     {
-        if (!$userId)
+        if (!$userId) {
             return collect([self::defaultPreset()]);
+        }
 
-        if (!is_numeric($userId) || $userId <= 0)
+        if (!is_numeric($userId) || $userId <= 0) {
             throw new InvalidArgumentException('Invalid user ID.');
+        }
 
         return self::where('user_id', $userId)->get();
     }
 
     /**
      * Get one timer preset for a specific user.
-     * @param mixed $userId
-     * @param mixed $presetId
-     * @throws \InvalidArgumentException if user id or preset id is not a number or is less than or equal to zero.
-     * @return ?UserTimerPreset
+     *
+     * @param  mixed  $userId
+     * @param  mixed  $presetId
+     *
+     * @throws InvalidArgumentException if user id or preset id is not a number or is less than or equal to zero.
      */
-    public static function forUserSingle(int|null $userId, int|null $presetId): ?UserTimerPreset
+    public static function forUserSingle(?int $userId, ?int $presetId): ?UserTimerPreset
     {
-        if (!$userId)
+        if (!$userId) {
             return self::defaultPreset();
+        }
 
-        if (!is_numeric($userId) || $userId <= 0 || !is_numeric($presetId) || $presetId <= 0)
+        if (!is_numeric($userId) || $userId <= 0 || !is_numeric($presetId) || $presetId <= 0) {
             throw new InvalidArgumentException('Invalid user ID.');
+        }
 
         return self::where(['user_id' => $userId, 'id' => $presetId])->firstOrFail();
     }
 
     /**
      * Get timer preset count for a specific user.
-     * @param mixed $userId
-     * @return int
+     *
+     * @param  mixed  $userId
      */
-    public static function forUserCount(int|null $userId): int
+    public static function forUserCount(?int $userId): int
     {
-        if (!$userId)
+        if (!$userId) {
             return 0;
+        }
 
         return self::where('user_id', $userId)->count();
     }
 
     /**
      * Get a default timer preset
-     * @return UserTimerPreset
      */
     public static function defaultPreset(): UserTimerPreset
     {

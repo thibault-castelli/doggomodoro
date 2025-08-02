@@ -16,7 +16,7 @@ class UserTimerPresetTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        // Create a user for authentication
+
         $this->user = User::factory()->create();
     }
 
@@ -37,6 +37,7 @@ class UserTimerPresetTest extends TestCase
 
     public function test_user_can_create_a_preset()
     {
+        // Arrange
         $this->actingAs($this->user);
 
         $data = [
@@ -49,8 +50,10 @@ class UserTimerPresetTest extends TestCase
             'auto_play' => false,
         ];
 
+        // Act
         $response = $this->post('/presets', $data);
 
+        // Assert
         $response->assertRedirect(route('presets'));
         $this->assertDatabaseHas('user_timer_presets', [
             'user_id' => $this->user->id,
@@ -60,8 +63,10 @@ class UserTimerPresetTest extends TestCase
 
     public function test_user_can_edit_a_preset()
     {
+        // Arrange
         $preset = UserTimerPreset::factory()->create(['user_id' => $this->user->id]);
 
+        // Act / Assert
         $this->actingAs($this->user)
             ->get("/presets/{$preset->id}")
             ->assertStatus(200)
@@ -70,19 +75,22 @@ class UserTimerPresetTest extends TestCase
 
     public function test_user_cannot_edit_preset_of_other_user()
     {
+        // Arrange
         $otherUser = User::factory()->create();
         $preset = UserTimerPreset::factory()->create(['user_id' => $otherUser->id]);
 
         $this->actingAs($this->user);
 
+        // Act
         $response = $this->get("/presets/{$preset->id}");
 
+        // Assert
         $response->assertStatus(404);
     }
 
-
     public function test_user_can_update_a_preset()
     {
+        // Arrange
         $preset = UserTimerPreset::factory()->create(['user_id' => $this->user->id]);
 
         $this->actingAs($this->user);
@@ -97,8 +105,10 @@ class UserTimerPresetTest extends TestCase
             'auto_play' => true,
         ];
 
+        // Act
         $response = $this->put("/presets/{$preset->id}", $data);
 
+        // Assert
         $response->assertRedirect(route('presets'));
         $this->assertDatabaseHas('user_timer_presets', [
             'id' => $preset->id,
@@ -108,6 +118,7 @@ class UserTimerPresetTest extends TestCase
 
     public function test_user_cannot_update_preset_form_other_user()
     {
+        // Arrange
         $otherUser = User::factory()->create();
         $preset = UserTimerPreset::factory()->create(['user_id' => $otherUser->id]);
 
@@ -123,8 +134,10 @@ class UserTimerPresetTest extends TestCase
             'auto_play' => false,
         ];
 
+        // Act
         $response = $this->put("/presets/{$preset->id}", $data);
 
+        // Assert
         $response->assertRedirect();
         $response->assertSessionHas('error');
         $this->assertDatabaseMissing('user_timer_presets', [
@@ -135,14 +148,17 @@ class UserTimerPresetTest extends TestCase
 
     public function test_user_can_delete_a_preset()
     {
+        // Arrange
         $preset = UserTimerPreset::factory()->create(['user_id' => $this->user->id]);
         // Create a second preset so deletion is allowed
         UserTimerPreset::factory()->create(['user_id' => $this->user->id]);
 
         $this->actingAs($this->user);
 
+        // Act
         $response = $this->delete("/presets/{$preset->id}");
 
+        // Assert
         $response->assertRedirect(route('presets'));
         $this->assertDatabaseMissing('user_timer_presets', [
             'id' => $preset->id,
@@ -151,12 +167,15 @@ class UserTimerPresetTest extends TestCase
 
     public function test_user_cannot_delete_last_preset()
     {
+        // Arrange
         $preset = UserTimerPreset::factory()->create(['user_id' => $this->user->id]);
 
         $this->actingAs($this->user);
 
+        // Act
         $response = $this->delete("/presets/{$preset->id}");
 
+        // Assert
         $response->assertRedirect();
         $response->assertSessionHas('error');
         $this->assertDatabaseHas('user_timer_presets', [
@@ -166,13 +185,16 @@ class UserTimerPresetTest extends TestCase
 
     public function test_user_cannot_delete_preset_of_other_user()
     {
+        // Arrange
         $otherUser = User::factory()->create();
         $preset = UserTimerPreset::factory()->create(['user_id' => $otherUser->id]);
 
         $this->actingAs($this->user);
 
+        // Act
         $response = $this->delete("/presets/{$preset->id}");
 
+        // Assert
         $response->assertRedirect();
         $response->assertSessionHas('error');
         $this->assertDatabaseHas('user_timer_presets', [

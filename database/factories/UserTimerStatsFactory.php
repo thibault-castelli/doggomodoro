@@ -2,10 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use App\Models\UserTimerStats;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserTimerStats>
+ * @extends Factory<UserTimerStats>
  */
 class UserTimerStatsFactory extends Factory
 {
@@ -17,11 +19,11 @@ class UserTimerStatsFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => \App\Models\User::factory(),
+            'user_id' => User::factory(),
             'total_work_time' => $this->faker->numberBetween(0, 9999),
             'total_break_time' => $this->faker->numberBetween(0, 9999),
             'total_rounds_completed' => $this->faker->numberBetween(0, 9999),
-            'total_sessions_completed' => $this->faker->numberBetween(0, 9999)
+            'total_sessions_completed' => $this->faker->numberBetween(0, 9999),
         ];
     }
 }

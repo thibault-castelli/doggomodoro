@@ -71,7 +71,7 @@ export class Timer {
         const isSessionDone = this.currentRoundIndex >= this.rounds.length - 1;
         if (isSessionDone) {
             this.currentRoundIndex = 0;
-            await axios.put(route('update.timerStats'), {
+            await axios.put(route('timerStats.update'), {
                 total_work_time: this.totalWorkTime,
                 total_break_time: this.totalBreakTime,
                 total_rounds_completed: this.rounds.length,

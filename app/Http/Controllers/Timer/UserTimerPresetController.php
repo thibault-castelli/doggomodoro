@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Timer;
 
-use App\Http\Requests\Timer\UserTimerPresetRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Timer\UserTimerPresetRequest;
 use App\Models\UserTimerPreset;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +17,7 @@ class UserTimerPresetController extends Controller
     public function show()
     {
         return Inertia::render('presets/Presets', [
-            'timerPresets' => UserTimerPreset::forUser(Auth::id())
+            'timerPresets' => UserTimerPreset::forUser(Auth::id()),
         ]);
     }
 
@@ -86,8 +86,9 @@ class UserTimerPresetController extends Controller
     public function destroy(string $id)
     {
         try {
-            if (UserTimerPreset::forUserCount(Auth::id()) <= 1)
+            if (UserTimerPreset::forUserCount(Auth::id()) <= 1) {
                 throw new Exception('You cannot delete the only preset you have.');
+            }
 
             $userTimerPreset = UserTimerPreset::forUserSingle(Auth::id(), $id);
             $userTimerPreset->delete();

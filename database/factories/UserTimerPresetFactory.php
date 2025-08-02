@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use App\Models\UserTimerPreset;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +21,7 @@ class UserTimerPresetFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => \App\Models\User::factory(),
+            'user_id' => User::factory(),
             'name' => $this->faker->words(2, true) . ' Preset',
             'work_duration' => $this->faker->numberBetween(15, 60),
             'break_duration' => $this->faker->numberBetween(3, 15),

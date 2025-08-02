@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Database\Factories\UserTimerStatsFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use InvalidArgumentException;
+
 class UserTimerStats extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserTimerStatsFactory> */
+    /** @use HasFactory<UserTimerStatsFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -15,34 +18,34 @@ class UserTimerStats extends Model
         'total_work_time',
         'total_break_time',
         'total_rounds_completed',
-        'total_sessions_completed'
+        'total_sessions_completed',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     /**
      * Get timer stats for a specific user.
-     * @param int|null $userId
-     * @throws \InvalidArgumentException if user id is not a number or is less than or equal to zero.
-     * @return UserTimerStats
+     *
+     * @throws InvalidArgumentException if user id is not a number or is less than or equal to zero.
      */
-    public static function forUser(int|null $userId): UserTimerStats
+    public static function forUser(?int $userId): UserTimerStats
     {
-        if (!$userId)
+        if (!$userId) {
             return self::defaultTimerStats();
+        }
 
-        if (!is_numeric($userId) || $userId <= 0)
+        if (!is_numeric($userId) || $userId <= 0) {
             throw new InvalidArgumentException('Invalid user ID.');
+        }
 
         return self::where('user_id', $userId)->firstOrFail();
     }
 
     /**
      * Get a default timer stats
-     * @return UserTimerStats
      */
     public static function defaultTimerStats(): UserTimerStats
     {
@@ -51,7 +54,7 @@ class UserTimerStats extends Model
             'total_work_time' => 0,
             'total_break_time' => 0,
             'total_rounds_completed' => 0,
-            'total_sessions_completed' => 0
+            'total_sessions_completed' => 0,
         ]);
     }
 }
