@@ -13,7 +13,7 @@
     <SidebarMenuItem>
         <DropdownMenu>
             <DropdownMenuTrigger>
-                <SidebarMenuButton size="lg" class="text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent group">
+                <SidebarMenuButton size="lg" class="text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent group w-56">
                     <UserInfo {user} />
                     <ChevronsUpDown class="ml-auto size-4" />
                 </SidebarMenuButton>

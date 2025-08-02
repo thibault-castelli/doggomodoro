@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-    import { useInitials } from '@/hooks/useInitials';
     import type { User } from '@/types';
+    import {UserRound} from '@lucide/svelte';
 
     interface Props {
         user: User;
@@ -10,8 +10,6 @@
 
     let { user, showEmail = false }: Props = $props();
 
-    const { getInitials } = useInitials();
-
     let showAvatar = $derived(user.avatar && user.avatar !== '');
 </script>
 
@@ -19,8 +17,8 @@
     {#if showAvatar}
         <AvatarImage src={user.avatar} alt={user.name} />
     {:else}
-        <AvatarFallback class="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-            {getInitials(user.name)}
+        <AvatarFallback class="rounded-lg p-1.5">
+            <UserRound />
         </AvatarFallback>
     {/if}
 </Avatar>

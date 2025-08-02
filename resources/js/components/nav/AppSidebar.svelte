@@ -1,11 +1,10 @@
 <script lang="ts">
-    import NavFooter from '@/components/nav/NavFooter.svelte';
     import NavMain from '@/components/nav/NavMain.svelte';
     import NavUser from '@/components/nav/NavUser.svelte';
     import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
     import { type NavItem } from '@/types';
     import { Link } from '@inertiajs/svelte';
-    import { Github, LayoutGrid, Clock, Settings2, User, BookCheck } from 'lucide-svelte';
+    import { LayoutGrid, Clock, Settings2, User, BookCheck } from 'lucide-svelte';
     import AppLogo from '../icons/AppLogo.svelte';
     import { page } from '@inertiajs/svelte';
 
@@ -46,14 +45,6 @@
             icon: Settings2,
         },
     ];
-
-    const footerNavItems: NavItem[] = [
-        {
-            title: 'Made by codeintheshell',
-            href: 'https://github.com/thibault-castelli/doggomodoro',
-            icon: Github,
-        },
-    ];
 </script>
 
 <Sidebar collapsible="icon" variant="inset">
@@ -74,8 +65,6 @@
     </SidebarContent>
 
     <SidebarFooter>
-        <NavFooter items={footerNavItems} class="mt-auto" />
-
         {#if user}
             <NavUser />
         {/if}
