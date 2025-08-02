@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [TimerController::class, 'index'])->name('timer');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', [UserTimerStatsController::class, 'show'])->name('dashboard');
+    Route::get('/dashboard', [UserTimerStatsController::class, 'show'])->name('dashboard');
 
     Route::get('/presets', [UserTimerPresetController::class, 'show'])->name('presets');
     Route::get('/presets/create', [UserTimerPresetController::class, 'create'])->name('presets.create');

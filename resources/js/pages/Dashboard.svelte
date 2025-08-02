@@ -5,12 +5,15 @@
     import { minutesToTime } from '@/lib/utils/timeConverter';
     import Heading from '@/components/headings/Heading.svelte';
     import HeadingSmall from '@/components/headings/HeadingSmall.svelte';
+    import { router } from '@inertiajs/svelte';
 
     interface Props {
         timerStats: UserTimerStats;
     }
 
-    const { timerStats }: Props = $props();
+    let { timerStats }: Props = $props();
+    // TODO: find why when reloading Timer page and going to dashboard page, the timerStats props is undefined
+    if (!timerStats) router.get(route('dashboard'));
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
