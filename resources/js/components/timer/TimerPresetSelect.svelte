@@ -9,7 +9,7 @@
 </script>
 
 <div>
-    <Label class="mb-2 text-xl">Select Timer Preset</Label>
+    <Label class="mb-2 text-lg">Select Timer Preset</Label>
     <Select.Root type="single" bind:value>
         <Select.Trigger class="w-full">{currentPresetName}</Select.Trigger>
         <Select.Content>

@@ -1,93 +1,99 @@
-import { UserTimerPreset } from "@/types";
-import { secondsToTime } from "../utils/timeConverter";
-import { showRoundEndNotification } from "../utils/timerNotifier.svelte";
+import { UserTimerPreset } from '@/types';
+import axios from 'axios';
+import { secondsToTime } from '../utils/timeConverter';
+import { showRoundEndNotification } from '../utils/timerNotifier.svelte';
 
 const ONE_SECOND = 1000;
 const MINUTES_TO_SECONDS = 60;
 
-const createRoundsFromUserTimerSettings = (settings: UserTimerPreset): number[] => {
-	const {work_duration, break_duration, long_break_duration, long_break_interval} = settings;
-	const rounds = [];
-
-	for (let i = 0; i < long_break_interval; i++) {
-		rounds.push(work_duration);
-		if (i < long_break_interval - 1) 
-			rounds.push(break_duration);
-		else 
-			rounds.push(long_break_duration);
-	}
-
-	return rounds;
-}
-
 export class Timer {
-	constructor(preset: UserTimerPreset) {
-		this.rounds = createRoundsFromUserTimerSettings(preset);
-		this.currentTime = this.rounds.length > 0 ? this.rounds[0] * MINUTES_TO_SECONDS : 0;
-		this.autoPlay = preset.auto_play || false;
-		this.showNotifications = preset.notifications || false;
-	}
+    constructor(preset: UserTimerPreset) {
+        const { work_duration, break_duration, long_break_duration, long_break_interval, auto_play, notifications } = preset;
 
-	private rounds: number[] = $state([]);
-	private interval: NodeJS.Timeout | undefined = $state(undefined);
-	private currentRoundIndex: number = $state(0);
-	private currentTime: number = $state(0);
-	private autoPlay: boolean = false;
-	private showNotifications: boolean = false;
+        for (let i = 0; i < long_break_interval; i++) {
+            this.rounds.push(work_duration);
+            this.totalWorkTime += work_duration;
 
-	readonly isTimerOn: boolean = $derived(this.interval !== undefined);
-	readonly currentTimeDisplay: string = $derived(secondsToTime(this.currentTime));
-	readonly progressValue: number = $derived(this.currentTime / (this.rounds[this.currentRoundIndex] * MINUTES_TO_SECONDS) * 100);
-	readonly roundDisplay: string = $derived(`${this.currentRoundIndex + 1} / ${this.rounds.length}`);
-	readonly roundType: 'work' | 'break' = $derived(this.currentRoundIndex % 2 === 0 ? 'work' : 'break');
+            if (i < long_break_interval - 1) {
+                this.rounds.push(break_duration);
+                this.totalBreakTime += break_duration;
+            } else {
+                this.rounds.push(long_break_duration);
+                this.totalBreakTime += long_break_duration;
+            }
+        }
 
-	startTimer = () => {
-		this.currentTime--;
-		
-		this.interval = setInterval(() => {
-			this.currentTime -= 1;
-			if (this.currentTime <= 0) this.goToNextRound();
-		}, ONE_SECOND);
-	};
+        this.currentTime = this.rounds.length > 0 ? this.rounds[0] * MINUTES_TO_SECONDS : 0;
+        this.autoPlay = auto_play || false;
+        this.showNotifications = notifications || false;
+    }
 
-	pauseTimer = () => {
-		if (this.interval) {
-			clearInterval(this.interval);
-			this.interval = undefined;
-		}
-	};
+    private rounds: number[] = $state([]);
+    private interval: NodeJS.Timeout | undefined = $state(undefined);
+    private currentRoundIndex: number = $state(0);
+    private currentTime: number = $state(0);
+    private readonly autoPlay: boolean = false;
+    private readonly showNotifications: boolean = false;
 
-	stopTimer = () => {
-		this.pauseTimer();
-		this.resetCurrentTime();
-	};
+    private readonly totalWorkTime: number = 0;
+    private readonly totalBreakTime: number = 0;
 
-	goToNextRound = () => {
-		this.pauseTimer();
+    readonly isTimerOn: boolean = $derived(this.interval !== undefined);
+    readonly currentTimeDisplay: string = $derived(secondsToTime(this.currentTime));
+    readonly progressValue: number = $derived((this.currentTime / (this.rounds[this.currentRoundIndex] * MINUTES_TO_SECONDS)) * 100);
+    readonly roundDisplay: string = $derived(`${this.currentRoundIndex + 1} / ${this.rounds.length}`);
+    readonly roundType: 'work' | 'break' = $derived(this.currentRoundIndex % 2 === 0 ? 'work' : 'break');
 
-		const isSessionDone = this.currentRoundIndex >= this.rounds.length - 1;
-		if (isSessionDone) {
-			this.currentRoundIndex = 0;
-		} else {
-			this.currentRoundIndex += 1;
-		}
+    startTimer = () => {
+        this.currentTime--;
 
-		this.resetCurrentTime();
+        this.interval = setInterval(() => {
+            this.currentTime -= 1;
+            if (this.currentTime <= 0) this.goToNextRound();
+        }, ONE_SECOND);
+    };
 
-		if (this.showNotifications)
-			showRoundEndNotification(isSessionDone ? 'longBreak' : this.currentRoundIndex % 2 === 0 ? 'work' : 'shortBreak');
+    pauseTimer = () => {
+        if (this.interval) {
+            clearInterval(this.interval);
+            this.interval = undefined;
+        }
+    };
 
-		if (this.autoPlay && this.currentRoundIndex !== 0) 
-			this.startTimer();
-	};
+    stopTimer = () => {
+        this.pauseTimer();
+        this.resetCurrentTime();
+    };
 
-	resetCurrentTime = () => {
-		this.currentTime = this.rounds[this.currentRoundIndex] * MINUTES_TO_SECONDS;
-	};
+    goToNextRound = async () => {
+        this.pauseTimer();
 
-	resetSession = () => {
-		this.pauseTimer();
-		this.currentRoundIndex = 0;
-		this.resetCurrentTime();
-	};
+        const isSessionDone = this.currentRoundIndex >= this.rounds.length - 1;
+        if (isSessionDone) {
+            this.currentRoundIndex = 0;
+            await axios.put(route('update.timerStats'), {
+                total_work_time: this.totalWorkTime,
+                total_break_time: this.totalBreakTime,
+                total_rounds_completed: this.rounds.length,
+            });
+        } else {
+            this.currentRoundIndex += 1;
+        }
+
+        this.resetCurrentTime();
+
+        if (this.showNotifications) showRoundEndNotification(isSessionDone ? 'longBreak' : this.currentRoundIndex % 2 === 0 ? 'work' : 'shortBreak');
+
+        if (this.autoPlay && this.currentRoundIndex !== 0) this.startTimer();
+    };
+
+    resetCurrentTime = () => {
+        this.currentTime = this.rounds[this.currentRoundIndex] * MINUTES_TO_SECONDS;
+    };
+
+    resetSession = () => {
+        this.pauseTimer();
+        this.currentRoundIndex = 0;
+        this.resetCurrentTime();
+    };
 }

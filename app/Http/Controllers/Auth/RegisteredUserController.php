@@ -61,12 +61,11 @@ class RegisteredUserController extends Controller
 
     public function checkEmail(Request $request)
     {
-        $email = $request->input('email');
+        $validated = $request->validate([
+            'email' => ['required', 'email']
+        ]);
 
-        if (!$email)
-            return response()->json(['error' => 'Email is required'], 400);
-
-        $exists = User::where('email', $email)->exists();
+        $exists = User::where('email', $validated['email'])->exists();
         return response()->json(['exists' => $exists]);
     }
 }
