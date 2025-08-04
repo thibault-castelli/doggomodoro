@@ -6,6 +6,7 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\UserTimerPreset;
 use App\Models\UserTimerStats;
+use App\Models\DailySessionCount;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,8 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
         $testUser = User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
@@ -27,6 +26,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         UserTimerStats::factory(1)->create([
+            'user_id' => $testUser->id,
+        ]);
+
+        DailySessionCount::factory(30)->create([
             'user_id' => $testUser->id,
         ]);
     }

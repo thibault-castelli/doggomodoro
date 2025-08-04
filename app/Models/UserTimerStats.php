@@ -31,30 +31,12 @@ class UserTimerStats extends Model
      *
      * @throws InvalidArgumentException if user id is not a number or is less than or equal to zero.
      */
-    public static function forUser(?int $userId): UserTimerStats
+    public static function forUser(int $userId): UserTimerStats
     {
-        if (!$userId) {
-            return self::defaultTimerStats();
-        }
-
         if (!is_numeric($userId) || $userId <= 0) {
             throw new InvalidArgumentException('Invalid user ID.');
         }
 
         return self::where('user_id', $userId)->firstOrFail();
-    }
-
-    /**
-     * Get a default timer stats
-     */
-    public static function defaultTimerStats(): UserTimerStats
-    {
-        return new self([
-            'user_id' => -1,
-            'total_work_time' => 0,
-            'total_break_time' => 0,
-            'total_rounds_completed' => 0,
-            'total_sessions_completed' => 0,
-        ]);
     }
 }
