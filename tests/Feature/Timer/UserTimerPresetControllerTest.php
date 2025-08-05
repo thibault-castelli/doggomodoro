@@ -7,7 +7,7 @@ use App\Models\UserTimerPreset;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class UserTimerPresetTest extends TestCase
+class UserTimerPresetControllerTest extends TestCase
 {
     use RefreshDatabase;
 

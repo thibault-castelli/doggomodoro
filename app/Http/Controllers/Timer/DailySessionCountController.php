@@ -13,10 +13,13 @@ class DailySessionCountController extends Controller
 {
     public function get(string $from, ?string $to = null)
     {
-        $fromDate = DateTime::createFromFormat('Y-m-d', $from);
+        if (!$fromDate = DateTime::createFromFormat('Y-m-d', $from)) {
+            return response()->json(['error' => 'Invalid start date format'], 400);
+        }
+
         $toDate = null;
-        if ($to) {
-            $toDate = DateTime::createFromFormat('Y-m-d', $to);
+        if ($to && !$toDate = DateTime::createFromFormat('Y-m-d', $to)) {
+            return response()->json(['error' => 'Invalid end date format'], 400);
         }
 
         try {
