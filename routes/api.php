@@ -13,4 +13,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/timer-stats', [UserTimerStatsController::class, 'update'])->name('timerStats.update');
 
     Route::get('/daily-session-count/{from}/{to?}', [DailySessionCountController::class, 'get'])->name('dailySessionCount');
+    Route::post('daily-session-count', [DailySessionCountController::class, 'createOrUpdate'])->name('dailySessionCount.createOrUpdate');
 });

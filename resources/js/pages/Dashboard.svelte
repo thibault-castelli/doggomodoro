@@ -26,6 +26,7 @@
 
     onMount(async () => {
         await axios.get(route('dailySessionCount', {from: '2025-07-20'}));
+        await axios.post(route('dailySessionCount.createOrUpdate'));
     })
 </script>
 
