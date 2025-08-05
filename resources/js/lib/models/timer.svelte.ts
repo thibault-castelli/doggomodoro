@@ -1,5 +1,5 @@
+import { updateTimerStats } from '@/lib/services/timerService';
 import { UserTimerPreset } from '@/types';
-import axios from 'axios';
 import { secondsToTime } from '../utils/timeConverter';
 import { showRoundEndNotification } from '../utils/timerNotifier.svelte';
 
@@ -71,11 +71,7 @@ export class Timer {
         const isSessionDone = this.currentRoundIndex >= this.rounds.length - 1;
         if (isSessionDone) {
             this.currentRoundIndex = 0;
-            await axios.put(route('timerStats.update'), {
-                total_work_time: this.totalWorkTime,
-                total_break_time: this.totalBreakTime,
-                total_rounds_completed: this.rounds.length,
-            });
+            await updateTimerStats(this.totalWorkTime, this.totalBreakTime, this.rounds.length);
         } else {
             this.currentRoundIndex += 1;
         }

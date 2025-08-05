@@ -62,4 +62,11 @@ export interface UserTimerStats {
     total_sessions_completed: number;
 }
 
+export interface DailySessionCount {
+    id: number;
+    user_id: number;
+    sessions_completed: number;
+    created_at: Date;
+}
+
 export type BreadcrumbItemType = BreadcrumbItem;
