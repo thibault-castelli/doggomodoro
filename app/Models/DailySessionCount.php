@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use Database\Factories\DailySessionCountFactory;
-use http\Exception\InvalidArgumentException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
+use InvalidArgumentException;
 
 class DailySessionCount extends Model
 {
@@ -24,7 +24,7 @@ class DailySessionCount extends Model
     /**
      * Get daily session counts for user at given date.
      *
-     * @throws InvalidArgumentException if user id is not a number or is less than or equal to zero. Also if date from is greater than date to.
+     * @throws InvalidArgumentException if user id is not a number or is less than or equal to zero. Also, if date from is greater than date to.
      */
     public static function forUser(int $userId, \DateTime $from, ?\DateTime $to): Collection
     {

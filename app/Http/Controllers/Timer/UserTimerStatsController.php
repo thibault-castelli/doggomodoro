@@ -8,6 +8,7 @@ use App\Models\UserTimerStats;
 use Auth;
 use Exception;
 use Inertia\Inertia;
+use InvalidArgumentException;
 
 class UserTimerStatsController extends Controller
 {
@@ -31,6 +32,8 @@ class UserTimerStatsController extends Controller
             $userTimerStats->update($validated);
 
             return response()->json();
+        } catch (InvalidArgumentException $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
         } catch (Exception $e) {
             return response()->json(['error' => 'Failed to update timer statistics: ' . $e->getMessage()], 500);
         }

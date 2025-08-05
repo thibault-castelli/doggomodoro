@@ -6,6 +6,8 @@
     import Heading from '@/components/headings/Heading.svelte';
     import HeadingSmall from '@/components/headings/HeadingSmall.svelte';
     import { router } from '@inertiajs/svelte';
+    import { onMount } from 'svelte';
+    import axios from 'axios';
 
     interface Props {
         timerStats: UserTimerStats;
@@ -21,6 +23,10 @@
             href: '/dashboard',
         },
     ];
+
+    onMount(async () => {
+        await axios.get(route('dailySessionCount', {from: '2025-07-20'}));
+    })
 </script>
 
 <AppLayout title="Dashboard" {breadcrumbs}>

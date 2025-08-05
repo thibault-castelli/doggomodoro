@@ -20,7 +20,7 @@ class DailySessionCountFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'sessions_completed' => $this->faker->numberBetween(0, 10),
+            'sessions_completed' => $this->faker->numberBetween(1, 10),
             'created_at' => $this->faker->dateTimeBetween('-3 month', 'now'),
         ];
     }
