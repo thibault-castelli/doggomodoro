@@ -4,7 +4,8 @@
     import Heading from '@/components/headings/Heading.svelte';
     import { router } from '@inertiajs/svelte';
     import TimerStatsTable from '@/components/dashboard/TimerStatsTable.svelte';
-    import DailySessionCountCharts from '@/components/dashboard/DailySessionCountCharts.svelte';
+    import SessionsCountChart from '@/components/dashboard/SessionsCountChart.svelte';
+    import SessionsCalendar from '@/components/dashboard/SessionsCalendar.svelte';
 
     interface Props {
         timerStats: UserTimerStats;
@@ -24,9 +25,13 @@
 
 <AppLayout title="Dashboard" {breadcrumbs}>
     <div class="space-y-4 px-4 pt-4">
-        <Heading title="Dashboard" description="View your dashboard and timer statistics." />
+        <Heading title="Dashboard" description="View your completed sessions and timer statistics." />
 
-        <DailySessionCountCharts />
+        <section class="lg:flex lg:justify-center lg:gap-5">
+            <SessionsCalendar />
+            <SessionsCountChart />
+        </section>
+
         <TimerStatsTable timerStats={timerStats} />
     </div>
 </AppLayout>

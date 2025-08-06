@@ -11,7 +11,7 @@ interface Props {
 let { timerStats }: Props = $props();
 </script>
 
-<section>
+<section class="my-5 border rounded-2xl p-5">
     <HeadingSmall title="Timer Statistics" />
     <Table.Root>
         <Table.Caption>Your timer statistics.</Table.Caption>

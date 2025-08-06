@@ -15,7 +15,7 @@ const minutesToTime = (minutes: number): string => {
     const formattedHours = String(hours).padStart(2, '0');
     const formattedMinutes = String(remainingMinutes).padStart(2, '0');
 
-    return `${formattedHours}:${formattedMinutes}`;
+    return `${formattedHours}h ${formattedMinutes}`;
 };
 
 const dateToString = (date: Date): string => {
