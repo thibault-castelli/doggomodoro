@@ -7,9 +7,9 @@
     import AuthBase from '@/layouts/AuthLayout.svelte';
     import { mapZodErrosToFormErrors } from '@/lib/utils/zodErrorMapper';
     import { useForm } from '@inertiajs/svelte';
-    import axios from 'axios';
     import { LoaderCircle } from 'lucide-svelte';
     import { z } from 'zod';
+    import { checkEmailExists } from '@/lib/services/authService';
 
     const nameSchema = z.string().min(1, 'Name is required');
     const emailSchema = z.string().email();
@@ -94,8 +94,7 @@
     };
 
     const validateEmailExists = async () => {
-        const checkEmailResponse = await axios.post<{ exists: boolean }>(route('checkEmail'), { email: $form.email });
-        if (checkEmailResponse.data.exists) {
+        if (await checkEmailExists($form.email)) {
             $form.errors.email = 'This email is already registered';
             return false;
         }
