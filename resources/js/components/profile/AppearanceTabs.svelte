@@ -27,17 +27,17 @@
     let { class: className }: Props = $props();
 </script>
 
-<div class="inline-flex gap-1 rounded-lg bg-neutral-100 p-1 dark:bg-neutral-800 {className}">
+<div class="inline-flex flex-col gap-1 rounded-lg bg-transparent border p-3 w-64 {className}">
     {#each tabs as { value, Icon, label } (value)}
         <button
             onclick={() => handleUpdateAppearance(value)}
             class="flex items-center rounded-md px-3.5 py-1.5 transition-colors
             {currentAppearance === value
-                ? 'bg-white shadow-xs dark:bg-neutral-700 dark:text-neutral-100'
-                : 'text-neutral-500 hover:bg-neutral-200/60 hover:text-black dark:text-neutral-400 dark:hover:bg-neutral-700/60'}"
+                ? 'bg-primary shadow-xs text-background'
+                : 'text-muted-foreground hover:bg-secondary hover:text-primary  '}"
         >
-            <Icon class="-ml-1 h-4 w-4" />
-            <span class="ml-1.5 text-sm">{label}</span>
+            <Icon class="-ml-1 h-5 w-5" />
+            <span class="ml-1.5">{label}</span>
         </button>
     {/each}
 </div>
