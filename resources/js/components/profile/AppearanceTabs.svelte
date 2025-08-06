@@ -27,7 +27,7 @@
     let { class: className }: Props = $props();
 </script>
 
-<div class="inline-flex flex-col gap-1 rounded-lg bg-transparent border p-3 w-64 {className}">
+<div class="inline-flex flex-col gap-1 bg-transparent w-full {className}">
     {#each tabs as { value, Icon, label } (value)}
         <button
             onclick={() => handleUpdateAppearance(value)}

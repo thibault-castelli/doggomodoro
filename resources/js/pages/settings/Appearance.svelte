@@ -20,7 +20,7 @@
 
 <AppLayout title="Appearance Settings" breadcrumbs={breadcrumbItems}>
     <SettingsLayout>
-        <div class="space-y-6">
+        <div class="space-y-6 border rounded-2xl p-5">
             <HeadingSmall title="Appearance settings" description="Update your account's appearance settings" />
             <AppearanceTabs />
         </div>

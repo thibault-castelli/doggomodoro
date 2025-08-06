@@ -46,7 +46,7 @@
 
 <AppLayout title="Profile Settings" {breadcrumbs}>
     <SettingsLayout>
-        <div class="flex flex-col space-y-6">
+        <div class="flex flex-col space-y-6 border rounded-2xl p-5">
             <HeadingSmall title="Profile Information" description="Update your name and email address" />
 
             <form onsubmit={submit} class="space-y-6">

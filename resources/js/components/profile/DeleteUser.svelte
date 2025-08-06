@@ -39,7 +39,7 @@
     };
 </script>
 
-<div class="space-y-6">
+<div class="space-y-6 border rounded-2xl p-5">
     <HeadingSmall title="Delete account" description="Delete your account and all of its resources" />
     <div class="space-y-4 rounded-lg border border-red-100 bg-red-50 p-4 dark:border-red-200/10 dark:bg-red-700/10">
         <div class="relative space-y-0.5 text-red-600 dark:text-red-100">

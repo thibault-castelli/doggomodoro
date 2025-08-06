@@ -56,7 +56,7 @@
 
 <AppLayout title="Password Settings" breadcrumbs={breadcrumbItems}>
     <SettingsLayout>
-        <div class="space-y-6">
+        <div class="space-y-6 border rounded-2xl p-5">
             <HeadingSmall title="Update Password" description="Ensure your account is using a long, random password to stay secure" />
 
             <form onsubmit={updatePassword} class="space-y-6">

@@ -51,55 +51,57 @@
     <div class="px-4 py-6">
         <Heading title="Timer Presets" description="Configure your timer presets for optimal productivity." />
 
-        <div class="flex flex-col gap-5 mb-5 sm:items-end sm:flex-row">
-            <div class="grow w-full sm:max-w-[50%]">
-                <TimerPresetSelect bind:value={selectedPresetId} {timerPresets} />
+        <section class="border rounded-2xl p-5">
+            <div class="flex flex-col gap-5 mb-5 sm:items-end sm:flex-row">
+                <div class="grow w-full sm:max-w-[50%]">
+                    <TimerPresetSelect bind:value={selectedPresetId} {timerPresets} />
+                </div>
+                <div class="flex justify-around gap-2 grow sm:justify-start">
+                    <ButtonWithTooltip action={goToCreatePresetPage} tooltipText="Create Preset"><Plus /></ButtonWithTooltip>
+                    <ButtonWithTooltip action={goToEditPresetPage} tooltipText="Edit Selected Preset"><Pen /></ButtonWithTooltip>
+                    {#if timerPresets.length > 1}
+                        <ConfirmDeleteDialog
+                            title={`Delete '${selectedPreset.name}' Preset?`}
+                            action={goToDeletePresetPage}
+                            tooltipText="Delete Selected Preset"
+                        />
+                    {/if}
+                </div>
             </div>
-            <div class="flex justify-around gap-2 grow sm:justify-start">
-                <ButtonWithTooltip action={goToCreatePresetPage} tooltipText="Create Preset"><Plus /></ButtonWithTooltip>
-                <ButtonWithTooltip action={goToEditPresetPage} tooltipText="Edit Selected Preset"><Pen /></ButtonWithTooltip>
-                {#if timerPresets.length > 1}
-                    <ConfirmDeleteDialog
-                        title={`Delete '${selectedPreset.name}' Preset?`}
-                        action={goToDeletePresetPage}
-                        tooltipText="Delete Selected Preset"
-                    />
-                {/if}
-            </div>
-        </div>
 
-        <Table.Root>
-            <Table.Caption>Your preset informations.</Table.Caption>
-            <Table.Body>
-                <Table.Row>
-                    <Table.Head>Name</Table.Head>
-                    <Table.Cell>{selectedPreset.name}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                    <Table.Head>Work Duration</Table.Head>
-                    <Table.Cell>{selectedPreset.work_duration} minutes</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                    <Table.Head>Break Duration</Table.Head>
-                    <Table.Cell>{selectedPreset.break_duration} minutes</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                    <Table.Head>Long Break Duration</Table.Head>
-                    <Table.Cell>{selectedPreset.long_break_duration} minutes</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                    <Table.Head>Long Break Interval</Table.Head>
-                    <Table.Cell>{selectedPreset.long_break_interval}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                    <Table.Head>Auto Play</Table.Head>
-                    <Table.Cell>{selectedPreset.auto_play ? 'Yes' : 'No'}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                    <Table.Head>Notifications</Table.Head>
-                    <Table.Cell>{selectedPreset.notifications ? 'Yes' : 'No'}</Table.Cell>
-                </Table.Row>
-            </Table.Body>
-        </Table.Root>
+            <Table.Root >
+                <Table.Caption>Your preset informations.</Table.Caption>
+                <Table.Body>
+                    <Table.Row>
+                        <Table.Head>Name</Table.Head>
+                        <Table.Cell>{selectedPreset.name}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Head>Work Duration</Table.Head>
+                        <Table.Cell>{selectedPreset.work_duration} min</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Head>Break Duration</Table.Head>
+                        <Table.Cell>{selectedPreset.break_duration} min</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Head>Long Break Duration</Table.Head>
+                        <Table.Cell>{selectedPreset.long_break_duration} min</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Head>Long Break Interval</Table.Head>
+                        <Table.Cell>{selectedPreset.long_break_interval}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Head>Auto Play</Table.Head>
+                        <Table.Cell>{selectedPreset.auto_play ? 'Yes' : 'No'}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Head>Notifications</Table.Head>
+                        <Table.Cell>{selectedPreset.notifications ? 'Yes' : 'No'}</Table.Cell>
+                    </Table.Row>
+                </Table.Body>
+            </Table.Root>
+        </section>
     </div>
 </AppLayout>
