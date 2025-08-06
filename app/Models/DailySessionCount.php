@@ -40,9 +40,9 @@ class DailySessionCount extends Model
                 throw new InvalidArgumentException('From cannot be less than To.');
             }
 
-            return self::where('user_id', $userId)->whereBetween('created_at', [$from, $to])->get();
+            return self::where('user_id', $userId)->whereBetween('created_at', [$from, $to])->orderBy('created_at')->get();
         }
 
-        return self::where('user_id', $userId)->where('created_at', '>=', $from)->get();
+        return self::where('user_id', $userId)->where('created_at', '>=', $from)->orderBy('created_at')->get();
     }
 }
