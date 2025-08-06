@@ -2,6 +2,7 @@
 	import { Calendar as CalendarPrimitive } from "bits-ui";
 	import * as Calendar from "./index.js";
 	import { cn, type WithoutChildrenOrChild } from "@/lib/utils.js";
+    import { Dog } from 'lucide-svelte';
 
 	let {
 		ref = $bindable(null),
@@ -9,8 +10,10 @@
 		placeholder = $bindable(),
 		class: className,
 		weekdayFormat = "short",
+        highlightDates = [],
+        footerText = "",
 		...restProps
-	}: WithoutChildrenOrChild<CalendarPrimitive.RootProps> = $props();
+	} = $props();
 </script>
 
 <!--
@@ -48,7 +51,13 @@ get along, so we shut typescript up by casting `value` to `never`.
 							<Calendar.GridRow class="mt-2 w-full">
 								{#each weekDates as date (date)}
 									<Calendar.Cell {date} month={month.value}>
-										<Calendar.Day />
+                                        {#if highlightDates.find(highlightDate => highlightDate.year === date.year && highlightDate.month === date.month && highlightDate.day === date.day)}
+                                            <div class="w-full h-full flex justify-center items-center">
+                                                <Dog />
+                                            </div>
+                                        {:else}
+                                            <Calendar.Day />
+                                        {/if}
 									</Calendar.Cell>
 								{/each}
 							</Calendar.GridRow>
@@ -57,5 +66,6 @@ get along, so we shut typescript up by casting `value` to `never`.
 				</Calendar.Grid>
 			{/each}
 		</Calendar.Months>
+        <p class="text-center mt-5 text-sm text-muted-foreground">{footerText}</p>
 	{/snippet}
 </CalendarPrimitive.Root>
